@@ -36,6 +36,8 @@ CONSTRAINT		gardenFK		FOREIGN KEY(gardenID)
 #	1. Added AUTO_INCREMENT to primary key
 #	2. Added primary key (gardenID) as a columnn
 #	3. Added a REFERENCES to relate the each bed with a valid gardenid
+# 	4. Added DELETE restriction (to not delete all the beds if a garden were to be deleted)
+#   5. Added ON UPDATE CASCADE (updates the gardenID if it is changed in the Garden table)
 # 	-juan
 
 	

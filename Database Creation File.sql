@@ -9,16 +9,13 @@ use group_project_team8;
 create table Garden (
 gardenID			Int 		NOT NULL AUTO_INCREMENT,
 gardenLocation 		Char(35) 	NOT NULL,
-CONSTRAINT			gardenPK	PRIMARY KEY(gardenID),
-
-	
+CONSTRAINT			gardenPK	PRIMARY KEY(gardenID)
 );
-# 	Garden table changes: 
-#	1. Removed the bed foreign key
+# Changes: removed syntax error
 
 
 create table Bed (
-bedNo			Int 			NOT NULL AUTO_INCREMENT,
+bedNo			Int 			NOT NULL, 
 gardenID		Int				NOT NULL, 
 size 			Int 			NULL,
 soilType		Char(10)		NULL,
@@ -31,30 +28,32 @@ CONSTRAINT 	 	bedStatusValues	CHECK
 CONSTRAINT		bedAK			UNIQUE(bedUser),
 CONSTRAINT		gardenFK		FOREIGN KEY(gardenID) 
 				REFERENCES Garden(gardenID)
+                ON UPDATE CASCADE
+				ON DELETE RESTRICT
 ); 
-# 	Bed table Changes:
-#	1. Added AUTO_INCREMENT to primary key
-#	2. Added primary key (gardenID) as a columnn
-#	3. Added a REFERENCES to relate the each bed with a valid gardenid
-# 	4. Added DELETE restriction (to not delete all the beds if a garden were to be deleted)
-#   5. Added ON UPDATE CASCADE (updates the gardenID if it is changed in the Garden table)
-# 	-juan
-
+# Changes:
+# Removed auto_increment from primary key, it is not a surrogate key and gardens have set number of beds
+# Added DELETE restriction 
+# Added ON UPDATE CASCADE
 	
 create table Crop_Info (
 cropID 			Int				NOT NULL auto_increment,
+cropName		Char(35)		not null,
 cropFamily		char(35) 		not null,
 soilType		char(25)		null,
 sunNeeds		char(25)		null,
 variety			char(25)		not null,
+seasonID		int				not null, 
 constraint		cropInfoPK		primary key(cropID),
-constraint 		cropFK			foreign key(cropName),
-constraint 		seasonFK		foreign key(seasonID),		
-constraint		cropAK			unique(cropFamily),
+constraint 		cropFK			foreign key(cropName) references Current_Crop(cropName),
+constraint 		seasonFK		foreign key(seasonID) references Season(seasonID),
+constraint		cropAK			foreign key(cropFamily) references Current_Crops(cropFamily),
 constraint 		cropFamilyValues check 
 				(cropFamily in ('Alliaceae','non-rotation crop','Solanaceae','Umbelliferea','Cucurbits','Chenopodiaceae','Legumes','Brassicas'))
-
 );
+#Changes:
+#Added references for cropName to reference CurrentCrop
+#Addeed references for seasonID to reference Season
 
 create table Season (
 seasonID 		int				not null auto_increment,
@@ -70,12 +69,13 @@ cropName 		char(35)		not null,
 plantStatus 	char(25) 		null,
 yearPlanted		year			not null,
 constraint 		currentCropPK	primary key(cropName),
-constraint		currentCropFK	foreign key(cropFamily),
-constraint		bedFK			foreign key(bedNo),
-constraint 		cropIdFK		foreign key(cropID),
-constraint		seasonID 		foreign key(seasonName),
+constraint		currentCropFK	foreign key(cropFamily) references Crop_Info(cropFamily),
+constraint		bedFK			foreign key(bedNo) references Bed(BedNo),
+constraint 		cropIdFK		foreign key(cropID) references Crop_Info(cropID),
+constraint		seasonID 		foreign key(seasonName) references Season(seasonName)
 #concat seasonName and yearplanted to get semesterPlanted
 );
+#Added references
 
 create table Reserver (
 firstNmae		char(35)		not null,
@@ -85,15 +85,18 @@ semesterAssigned char(35) 		not null,
 constraint		reserverPK		primary key(lastName),
 constraint 		reserverNameAK	unique(firstName),
 constraint 		reserverEmailAK	unique(email),
-constraint		reserverFK		foreign key(bedNo)
+constraint		reserverFK		foreign key(bedNo) references Bed(bedNo)
 );
+#Added references to reserverFK
 
 create table Inventory (
 productName		char(50) 		not null,
 quantityInGarden int 			null,
 constraint		inventoryPK		primary key(productName),
-constraint		prouductID		foreign key(productID)
+constraint		inventoryFK 	foreign key(productID) references InventoryTransactions(productID)
 );
+#Changes foreign key name from productID to -> inventoryFK
+#Added reference to inventoryFK
 
 create table InventoryTransactions (
 productID		int				not null auto_increment,
@@ -102,16 +105,16 @@ datePurchased	date			not null,
 price			decimal(10,2)	not null,
 constraint		InventoryTransPK primary key(productID),
 constraint 		InventoryTransAK unique(datePurchased),
-constraint		InventoryTransFK foreign key(productName)
+constraint		InventoryTransFK foreign key(productName) references Inventory(productName)
 );
+#Added reference to InventoryTransFK
 
 create table FoodWaste (
 dateReported	date			not null,
 wasteType		char(20)		not null,
 weight			int				not null,
 constraint		FoodWastePK		primary key(dateReported),
-constraint		FoodWasteAK		unique(wasteType),
 constraint 		FoodWasteValue	check
 				(wasteType in ('Produce','Coffee Grounds'))
 );
-
+#Removed unique constraint on waste type 

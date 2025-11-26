@@ -10,12 +10,16 @@ create table Garden (
 gardenID			Int 		NOT NULL AUTO_INCREMENT,
 gardenLocation 		Char(35) 	NOT NULL,
 CONSTRAINT			gardenPK	PRIMARY KEY(gardenID),
-CONSTRAINT 			bedFK 		FOREIGN KEY(bedNo)
 
+	
 );
+# 	Garden table changes: 
+#	1. Removed the bed foreign key
+
 
 create table Bed (
-bedNo			Int 			NOT NULL,
+bedNo			Int 			NOT NULL AUTO_INCREMENT,
+gardenID		Int				NOT NULL, 
 size 			Int 			NULL,
 soilType		Char(10)		NULL,
 bedStatus 		Char(35)		NULL,
@@ -25,9 +29,16 @@ CONSTRAINT		soilTypeValues 	CHECK
 CONSTRAINT 	 	bedStatusValues	CHECK 
 				(bedStatus IN ('Planted', 'Turned', 'Cover Crop', 'Reserved', 'Fertilized')),
 CONSTRAINT		bedAK			UNIQUE(bedUser),
-CONSTRAINT		gardenFK		FOREIGN KEY(gardenID)
-);
+CONSTRAINT		gardenFK		FOREIGN KEY(gardenID) 
+				REFERENCES Garden(gardenID)
+); 
+# 	Bed table Changes:
+#	1. Added AUTO_INCREMENT to primary key
+#	2. Added primary key (gardenID) as a columnn
+#	3. Added a REFERENCES to relate the each bed with a valid gardenid
+# 	-juan
 
+	
 create table Crop_Info (
 cropID 			Int				NOT NULL auto_increment,
 cropFamily		char(35) 		not null,

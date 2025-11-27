@@ -78,7 +78,7 @@ constraint		seasonID 		foreign key(seasonName) references Season(seasonName)
 #Added references
 
 create table Reserver (
-firstNmae		char(35)		not null,
+firstName		char(35)		not null,
 lastName		char(35) 		not null,
 email 			char(50) 		null,
 semesterAssigned char(35) 		not null,

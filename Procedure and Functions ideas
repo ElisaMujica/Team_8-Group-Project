@@ -1,0 +1,10 @@
+User Defined functions: 
+  1. Function that returns the # of available beds
+  2. Function that returns the # of crops planted that does not include duplicates
+  3. Function that calculates # of club members with/without reservations 
+
+Stored Procedures: 
+  1. Select statement that displays all the crops and their corresponding count of the crops that are planted in a particular garden 
+  2. Select statement that displays the beds which are not reserved (displays size, soilType, but NOT status)
+  3. Select statement that displays low stock inventory items with (less than 3 in inventory)
+  4. Select statement that displays the last 1o inventory transactions

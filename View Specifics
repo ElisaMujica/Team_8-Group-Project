@@ -1,5 +1,20 @@
 #View Specific 
+Create View Member (
+Select 
+g.gardenID,
+g.gardenLoaction,
 
+b.bedNo,
+b.gardenID,
+b.size,
+b.soilType,
+b.bedStatus,
+
+c.cropID
+c.seasonID
+c.bedNo
+c.plantStatus
+c.semesterPlanted
 
 
 Add what you have here. 

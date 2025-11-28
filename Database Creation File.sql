@@ -120,7 +120,7 @@ semesterAssigned date not null,
 constraint ReservationPK primary key (userID),
 constraint ReservationFK foreign key (bedID) references Bed(bedNO)
 	ON UPDATE CASCADE ON DELETE RESTRICT,
-constraint ReservationFK foreign key (userID) references club_member(bedNO)
+constraint ReservationFK foreign key (userID) references club_member(userID)
 	ON UPDATE CASCADE ON DELETE RESTRICT
 );
 

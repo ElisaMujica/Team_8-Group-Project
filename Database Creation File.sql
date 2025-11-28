@@ -99,12 +99,14 @@ CREATE TABLE Growing_Bed(
 #Add club member table 
 Create table club_member(
 userID	int not null auto_increment,
+userType char(10) not null,
 lastName char(35) 	not null,
 firstName char(35)	not null,
 phoneNumber	int 	null,
 email		char(35) null,
 constraint 	ClubMemberPK primary key (userID),
-constraint 	ClubMemberAK unique (phoneNumber)
+constraint 	ClubMemberAK unique (phoneNumber),
+constraint userTypeCheck Check (userType in ('Advisor','Officer','Reserver','Member'))
 );
 
 #Add reservation

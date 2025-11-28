@@ -8,10 +8,27 @@ CREATE FUNCTION membersWithCurrentReservation()
 RETURNS INT 
 DETERMINISTIC 
 BEGIN 
+  DECLARE reserved INT; 
+
+  SELECT COUNT(DISTINCT userID) 
+  INTO reserved
+  From RESERVATION;
+
+  RETURN reservation; 
+
+END %% 
+
+Delimiter ; 
+
+CREATE FUNCTION membersWithNoCurrentReservation()
+RETURNS INT 
+DETERMINISTIC 
+BEGIN 
   DECLARE reservations INT; 
 
-SELECT COUNT (DISTINCT userID) 
+SELECT COUNT(*) 
   INTO reservations; 
+  FROM 
 
 RETURN reservation
 

@@ -1,8 +1,7 @@
 User Defined functions: 
 
-  3. Function that calculates # of club members with/without reservations 
-  for example: carrots | fall | 2025 -> carrots | fall 2025
-
+  3. Function that returns # of club members with/without reservations 
+ 
 Delimiter%%
 
 CREATE FUNCTION membersWithCurrentReservation()
@@ -41,6 +40,15 @@ BEGIN
 END %% 
 
 4. add a function named Semester that will concat semesterPlanted and yearPlanted to become one column 
+ for example: carrots | fall | 2025 -> carrots | fall 2025
+
+DELIMIER %%
+CREATE FUNCTION Semester(semester VARCHAR (8), year INT)
+RETURNS VARCHAR(15)
+DETERMINISTIC 
+BEGIN 
+  RETURN CONCAT (semester, ' ' , year); 
+END%%
 
 Delimiter ; 
 

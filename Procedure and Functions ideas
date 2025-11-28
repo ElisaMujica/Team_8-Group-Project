@@ -2,6 +2,23 @@ User Defined functions:
 
   3. Function that calculates # of club members with/without reservations 
 
+Delimiter%%
+
+CREATE FUNCTION membersWithCurrentReservation()
+RETURNS INT 
+DETERMINISTIC 
+BEGIN 
+  DECLARE reservations INT; 
+
+SELECT COUNT (DISTINCT userID) 
+  INTO reservations; 
+
+RETURN reservation
+
+END %% 
+
+Delimiter ; 
+
 Stored Procedures: 
   1. Select statement that displays all the crops and their corresponding count of the crops that are planted in a particular garden 
   2. Select statement that displays the beds which are not reserved (displays size, soilType, but NOT status)

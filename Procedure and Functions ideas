@@ -1,6 +1,8 @@
 User Defined functions: 
 
   3. Function that calculates # of club members with/without reservations 
+4. add a function named Semester that will concat semesterPlanted and yearPlanted to become one column 
+  for example: carrots | fall | 2025 -> carrots | fall 2025
 
 Delimiter%%
 

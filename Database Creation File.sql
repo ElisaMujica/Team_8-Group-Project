@@ -1,3 +1,9 @@
+#Team_ Project 
+#Database Creation file 
+#Notes: If changes need to be made to design, please add comment and make change in database design: https://lucid.app/lucidchart/7184eecd-2be3-4a9c-980e-153cd7cb40c1/edit?invitationId=inv_97aa72d9-8241-4889-939a-19b138899679&page=0_0#
+#
+#
+##############################################################################################
 CREATE DATABASE IF NOT EXISTS group_project_team8;
 USE group_project_team8;
 
@@ -90,4 +96,57 @@ CREATE TABLE Growing_Bed(
     CONSTRAINT ValidHarvestDate CHECK (dateHarvested IS NULL OR dateHarvested >= datePlanted)
 );
 
+#Add club member table 
+Create table club_member(
+userID	int not null auto_increment,
+userType char(10) not null,
+lastName char(35) 	not null,
+firstName char(35)	not null,
+phoneNumber	int 	null,
+email		char(35) null,
+constraint 	ClubMemberPK primary key (userID),
+constraint 	ClubMemberAK unique (phoneNumber),
+constraint userTypeCheck Check (userType in ('Advisor','Officer','Reserver','Member'))
+);
+
+#Add reservation
+create table Reservation (
+userID int not null,
+bedNo int not null,
+semesterAssigned date not null,
+constraint ReservationPK primary key (userID),
+constraint ReservationFK foreign key (bedID) references Bed(bedNO)
+	ON UPDATE CASCADE ON DELETE RESTRICT,
+constraint ReservationFK foreign key (userID) references club_member(bedNO)
+	ON UPDATE CASCADE ON DELETE RESTRICT
+);
+
+#Add item table
+create table item(
+itemID int not null auto_increment,
+itemName char(35)	not null,
+type 	char(15)	null,
+constraint itemPK primary key (itemID)
+);
+
+#add inventory table
+create table inventory (
+quantity int null,
+constraint inventoryPK primary key (itemID, gardenID),
+constraint inventoryFK foreign key (itemID) references item(itemID)
+	ON UPDATE CASCADE ON DELETE RESTRICT,
+constraint inventoryFK foreign key (gardenID) references Garden(gardenID)
+	ON UPDATE CASCADE ON DELETE RESTRICT
+);
+
+#add inventory trans
+create table inventoryTrans(
+transactionNo int not null auto_increment,
+quantityChange	int not null,
+dataPurchased	date not null,
+price 	double	not null,
+constraint inventoryTransPK primary key (transactionNo),
+constraint inventoryTransFK foreign key	(itemID) references item(itemID)
+	ON UPDATE CASCADE ON DELETE RESTRICT
+);
 

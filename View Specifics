@@ -1,4 +1,24 @@
 #View Specific 
+#View Specifications
+1. Advisor - has access to all data 
+Inventory InventoryTransaction 
+Combined garden, bed, and current crop tables
+Crop info
+
+2. Club officer - should have access to most data
+Inventory 
+Combined garden, bed, and current crop tables
+Crop info
+
+3. Club member - should have access to least data 
+Combined garden, bed, and current crop tables
+-minus reserved bed
+
+
+4. Reserver - should have access to club member data 
++plus reserved bed
+Combined garden, bed, and current crop tables
+
 Create View Member (
 Select 
 g.gardenID,

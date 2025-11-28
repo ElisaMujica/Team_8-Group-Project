@@ -146,5 +146,4 @@ price 	double	not null,
 constraint inventoryTransPK primary key (transactionNo),
 constraint inventoryTransFK foreign key	(itemID) references item(itemID)
 	ON UPDATE CASCADE ON DELETE RESTRICT,
-constraint inventoryAK unique(date)
 );

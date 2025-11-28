@@ -24,13 +24,17 @@ CREATE FUNCTION membersWithNoCurrentReservation()
 RETURNS INT 
 DETERMINISTIC 
 BEGIN 
-  DECLARE reservations INT; 
+  DECLARE notReserved INT; 
 
-SELECT COUNT(*) 
-  INTO reservations; 
-  FROM 
+  SELECT COUNT(*) 
+  INTO reservations
+  FROM ClubMember
+  WHERE userID 
+        NOT IN(
+          SELECT userID FROM Reservation
+        ); 
 
-RETURN reservation
+  RETURN notReserved; 
 
 END %% 
 

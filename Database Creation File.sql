@@ -56,8 +56,11 @@ CREATE TABLE Current_Crops (
   cropName char(35) NOT NULL,
   plantStatus char(25) DEFAULT NULL,
   cropID int NOT NULL,
+semesterPlanter char(10) not null,
+  yearPlanted	int not null,
   CONSTRAINT currentCropPK PRIMARY KEY (cropName),
-  CONSTRAINT cropIdFK FOREIGN KEY (cropID) REFERENCES Crop_Info (cropID)
+  CONSTRAINT cropIdFK FOREIGN KEY (cropID) REFERENCES Crop_Info (cropID),
+	constraint semesterCheck check (semesterPlanted in ('Spring', 'Summer', 'Fall'))
 );
 
 

@@ -1,7 +1,6 @@
 User Defined functions: 
 
   3. Function that calculates # of club members with/without reservations 
-4. add a function named Semester that will concat semesterPlanted and yearPlanted to become one column 
   for example: carrots | fall | 2025 -> carrots | fall 2025
 
 Delimiter%%
@@ -13,7 +12,6 @@ BEGIN
   DECLARE reserved INT; 
 
   SELECT COUNT(DISTINCT userID) 
-  INTO reserved
   From RESERVATION;
 
   RETURN reservation; 
@@ -21,6 +19,8 @@ BEGIN
 END %% 
 
 Delimiter ; 
+
+DELIMITER %%
 
 CREATE FUNCTION membersWithNoCurrentReservation()
 RETURNS INT 
@@ -40,6 +40,8 @@ BEGIN
 
 END %% 
 
+4. add a function named Semester that will concat semesterPlanted and yearPlanted to become one column 
+
 Delimiter ; 
 
 Stored Procedures: 
@@ -51,14 +53,14 @@ BEGIN
   SELECT 
   g.gardenID, 
   g.gardenLocation,
-  b.bedNo
+  b.bedNO
   ci.cropName 
   s.seasonName as seasonality
   Count(*) as cropCount
   From Current_Crops AS cc
 
   JOIN Bed AS b 
-    ON cc.bedNO = b.bedNo
+    ON cc.bedNO = b.bedNO
   JOIN Garden AS g 
     ON b.gardenID = g.gardenID
   JOIN Crop_Season as cs
@@ -67,17 +69,40 @@ BEGIN
     ON cs.CropID = ci.cropID
   JOIN Season AS S
     ON cs.SeasonID = S.SeasonID
-  GROUP BY g..gardenID, g.gardenLocation, b.bedNo, ci.cropName, s.seasonName
-  ORDER BY g.gardenID, b.bedNo, cropCount DESC;
+  GROUP BY g..gardenID, g.gardenLocation, b.bedNO, ci.cropName, s.seasonName
+  ORDER BY g.gardenID, b.bedNO, cropCount DESC;
 
 END %%
 
 DELIMITER ;
 
 
-
-
   2. Select statement that displays the beds which are not reserved (displays size, soilType, but NOT status)
+DELIMITER %%
+
+CREATE PROCEDURE UnreservedBeds()
+BEGIN
+  SELECT
+    b.bedNo, 
+    b.gardenID, 
+    g.gardenLocation, 
+    b.size, 
+    b.soilType,  
+    b.bedStatus
+  FROM Bed as b
+  JOIN Garden as g
+    ON b.gardenID = g.gardenID
+  LEFT JOIN Reservation AS r  
+    ON b.bedNO = r.bedNO
+  WHERE r.bedNO IS NULL
+
+END %%
+
+DELIMITER ; 
+
+
+  
+
 
   3. Select statement that displays low stock inventory items with (less than 3 in inventory)
 

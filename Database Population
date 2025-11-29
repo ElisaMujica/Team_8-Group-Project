@@ -70,3 +70,15 @@ VALUES
 	( 20, 12, 4, 'sand-loamy', 'partial'),  
 	( 21, 13, 3, 'silt-loamy', 'partial'), 
 	( 22, 13, 4, 'silt-loamy', 'partial'), 
+	( 23, 14, 2, 'sand', 'full'), 
+    ( 24, 15, 2, 'loam', 'full'), 
+    ( 25, 16, 1, 'sand-loamy', 'full'),  
+	( 26, 16, 2, 'sand-loamy', 'full'),  
+    ( 27, 17, 3, 'silt-loamy', 'partial'), 
+    ( 28, 17, 4 , 'silt-loamy', 'partial'), 
+    ( 29, 18, 3, 'silt-loamy', 'partial'), 
+    ( 30, 18, 4, 'silt-loamy', 'partial'), 
+    ( 31, 19, 3, 'silt-loamy', 'partial'), 
+	( 32, 19, 4, 'silt-loamy', 'partial'); 
+    
+    

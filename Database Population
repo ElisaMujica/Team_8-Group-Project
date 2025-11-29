@@ -53,7 +53,7 @@ VALUES
     ( 3, 2, 2, 'sand-loamy', 'full'), 
     ( 4, 3, 3, 'silt-loamy', 'partial'), 
     ( 5, 3, 4, 'silt-loamy', 'partial'), 
-	( 6, 4, 'sand', 'full'), 
+	( 6, 4, 5, 'sand', 'full'), 
 	( 7, 5, 1, 'loam', 'full'), 
 	( 8, 5, 2, 'loam', 'full'), 
 	( 9, 6, 3, 'sand-loamy', 'partial'),

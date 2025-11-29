@@ -113,7 +113,7 @@ gardenID INT NOT NULL,
 constraint inventoryPK primary key (itemID, gardenID),
 constraint inventoryFK foreign key (itemID) references item(itemID)
 	ON UPDATE CASCADE ON DELETE RESTRICT,
-constraint inventoryFK foreign key (gardenID) references Garden(gardenID)
+constraint inventoryFK2 foreign key (gardenID) references Garden(gardenID)
 	ON UPDATE CASCADE ON DELETE RESTRICT
 );
 

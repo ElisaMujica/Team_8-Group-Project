@@ -104,7 +104,7 @@ create table Reservation (
 userID int not null,
 bedNo char(5) not null,
 semesterAssigned date not null,
-constraint ReservationPK primary key (userID),
+constraint ReservationPK primary key (userID,bedNo),
 constraint ReservationFK foreign key (bedNo) references Bed(bedNO)
 	ON UPDATE CASCADE ON DELETE RESTRICT,
 constraint ReservationFK2 foreign key (userID) references club_member(userID)

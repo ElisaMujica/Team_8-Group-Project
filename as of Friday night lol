@@ -61,12 +61,10 @@ CREATE TABLE Bed (
     bedNO char(5) NOT NULL,
     size decimal(10, 2) NOT NULL,
     soilType char(10) NOT NULL,
-    bedStatus char(35) NOT NULL,
     gardenID INT NOT NULL,
     CONSTRAINT bedPK PRIMARY KEY (bedNO),
     CONSTRAINT bedSize CHECK (size > 0),
     CONSTRAINT bedSoilType CHECK (soilType IN ('sand-loamy', 'silt-loamy', 'sandy', 'loamy','clay-loamy','clay')),
-    CONSTRAINT bedStatusCheck CHECK (bedStatus IN ('Planted', 'Turned', 'Cover Crop', 'Reserved', 'Fertilized') ),
     CONSTRAINT gardenFK FOREIGN KEY (gardenID) REFERENCES Garden (gardenID)
 );
 

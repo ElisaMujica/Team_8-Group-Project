@@ -121,7 +121,7 @@ constraint itemPK primary key (itemID)
 
 #add inventory table
 create table inventory (
-iventoryID int not null auto_increment,
+inventoryID int not null auto_increment,
 quantity int null,
 gardenID INT NOT NULL,
 constraint inventoryPK primary key (inventoryID),

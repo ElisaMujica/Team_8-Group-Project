@@ -115,18 +115,16 @@ constraint ReservationFK2 foreign key (userID) references club_member(userID)
 create table item(
 itemID int not null auto_increment,
 itemName char(35)	not null,
-type 	char(15)	null,
+itemType 	char(15)	null,
 constraint itemPK primary key (itemID)
 );
 
 #add inventory table
 create table inventory (
-itemID int not null,
+iventoryID int not null auto_increment,
 quantity int null,
 gardenID INT NOT NULL,
-constraint inventoryPK primary key (itemID, gardenID),
-constraint inventoryFK foreign key (itemID) references item(itemID)
-	ON UPDATE CASCADE ON DELETE RESTRICT,
+constraint inventoryPK primary key (inventoryID),
 constraint inventoryFK2 foreign key (gardenID) references Garden(gardenID)
 	ON UPDATE CASCADE ON DELETE RESTRICT
 );
@@ -140,5 +138,7 @@ price 	double	not null,
 itemID int not null,
 constraint inventoryTransPK primary key (transactionNo),
 constraint inventoryTransFK foreign key	(itemID) references item(itemID)
+	ON UPDATE CASCADE ON DELETE RESTRICT,
+constraint inventoryTransFK2 foreign key (inventoryID) references inventory(inventoryID)
 	ON UPDATE CASCADE ON DELETE RESTRICT
 );

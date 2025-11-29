@@ -1,0 +1,13 @@
+INSERT INTO club_member (userType, lastName, firstName) 
+VALUES 
+	('Advisor', 'Penaba', 'Adriana' ), 
+    ('Reserver', 'Numins', 'Debrorah' ), 
+    ('Officer', 'Mujica', 'Elisa'), 
+    ('Member', 'Garcia', 'Lizbeth'); 
+
+INSERT INTO season (seasonName)
+VALUES 
+	(1, 'Spring'),
+    (2, 'Summer'),
+    (3, 'Fall'),
+    (4, 'Winter'); 

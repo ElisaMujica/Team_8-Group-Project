@@ -2,7 +2,7 @@ User Defined functions:
 
   3. Function that returns # of club members with/without reservations 
  
-Delimiter%%
+Delimiter %%
 
 CREATE FUNCTION membersWithCurrentReservation()
 RETURNS INT 
@@ -153,3 +153,8 @@ END %%
 DELIMITER ; 
 
 DELIMITER %%
+
+
+5. Create a query to keep track of the inventory i
+
+DE

@@ -45,3 +45,28 @@ VALUES
     ( 2, 'Sustainability Garden'); 
 
 
+--Crop_Season population 
+INSERT INTO Crop_Season (cropSeasonID, cropID, seasonID, soilType, sunNeeds)
+VALUES 
+	( 1, 1, 3, 'sand-loamy', 'full'), 
+    ( 2, 1, 4, 'sand-loamy', 'full'), 
+    ( 3, 2, 2, 'sand-loamy', 'full'), 
+    ( 4, 3, 3, 'silt-loamy', 'partial'), 
+    ( 5, 3, 4, 'silt-loamy', 'partial'), 
+	( 6, 4, 'sand', 'full'), 
+	( 7, 5, 1, 'loam', 'full'), 
+	( 8, 5, 2, 'loam', 'full'), 
+	( 9, 6, 3, 'sand-loamy', 'partial'),
+	( 10, 6, 4 , 'sand-loamy', 'partial'),
+	( 11, 7, 1, 'sand-loamy', 'full'), 
+    ( 12, 7, 2, 'sand-loamy', 'full'), 
+	( 13, 8, 3, 'silt-loamy', 'partial'),
+	( 14, 8, 4, 'silt-loamy', 'partial'),
+	( 15, 9, 3, 'sand-loamy', 'partial'),
+	( 16, 10, 3, 'sand-loamy', 'partial'),
+	( 17, 11, 1, 'sand-loamy', 'partial'),
+    ( 18, 11, 2, 'sand-loamy', 'partial'),
+	( 19, 12, 3, 'sand-loamy', 'partial'),  
+	( 20, 12, 4, 'sand-loamy', 'partial'),  
+	( 21, 13, 3, 'silt-loamy', 'partial'), 
+	( 22, 13, 4, 'silt-loamy', 'partial'), 

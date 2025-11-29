@@ -28,7 +28,7 @@ BEGIN
   DECLARE notReserved INT; 
 
   SELECT COUNT(*) 
-  INTO reservations
+  INTO notReserved
   FROM ClubMember
   WHERE userID 
         NOT IN(
@@ -154,4 +154,7 @@ END %%
 
 DELIMITER ; 
 
+#Select Statement displays the inventory quantity of each table
 DELIMITER %%
+
+CREATE PROCEDURE 

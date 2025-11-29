@@ -36,3 +36,11 @@ VALUES
     ( 17, 'cauliflower', 'Brassicas'),
     ( 18, 'eggplant' , 'Solanaceae'), 
     ( 19, 'kale', 'Brassicas'); 
+
+-- Garden population 
+INSERT INTO Garden (gardenID, gardenLocation)
+VALUES 
+	( 1, 'CST Garden'), 
+    ( 2, 'Sustainability Garden'); 
+
+

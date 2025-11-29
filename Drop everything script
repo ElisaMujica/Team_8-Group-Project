@@ -1,0 +1,27 @@
+# to drop everything in database
+
+DROP TABLE `group_project_team8`.`crop_season`;
+DROP TABLE `group_project_team8`.`current_crops`;
+DROP TABLE `group_project_team8`.`inventorytrans`;
+DROP TABLE `group_project_team8`.`inventory`;
+DROP TABLE `group_project_team8`.`reservation`;
+DROP TABLE `group_project_team8`.`item`;
+DROP TABLE `group_project_team8`.`crop_info`;
+DROP TABLE `group_project_team8`.`season`;
+DROP TABLE `group_project_team8`.`bed`;
+DROP TABLE `group_project_team8`.`club_member`;
+DROP TABLE `group_project_team8`.`garden`;
+
+DROP VIEW `group_project_team8`.`advisorinventorytransview`;
+DROP VIEW `group_project_team8`.`clubmemberview`;
+DROP VIEW `group_project_team8`.`currentcropview`;
+DROP VIEW `group_project_team8`.`officerviewinventory`;
+
+
+DROP PROCEDURE `group_project_team8`.`Last10InventoryTransactions`;
+DROP PROCEDURE `group_project_team8`.`LowStockItems`;
+DROP PROCEDURE `group_project_team8`.`UnreservedBeds`;
+
+
+DROP FUNCTION `group_project_team8`.`membersWithNoCurrentReservation`;
+DROP FUNCTION `group_project_team8`.`Semester`;

@@ -142,3 +142,27 @@ constraint inventoryTransFK foreign key	(itemID) references item(itemID)
 constraint inventoryTransFK2 foreign key (inventoryID) references inventory(inventoryID)
 	ON UPDATE CASCADE ON DELETE RESTRICT
 );
+
+
+create view ClubMemberView (cropName, bedNo, gardenName, semesterPlanted, yearPlanted)
+as select c.cropName, b.bedNo, g.gardenID, c.semesterPlanted, c.yearPlanted
+from current_Crops c, Bed b, Garden g
+where bedStatus != 'Reserved'
+group by b.bedNo;
+
+
+create view CurrentCropView (cropName, bedNo, gardenName, semesterPlanted, yearPlanted)
+as select c.cropName, b.bedNo, g.gardenID, c.semesterPlanted, c.yearPlanted
+from Current_Crops c, Bed b, Garden g
+group by b.bedNo;
+
+create view OfficerViewInventory (itemName, quanity, gardenName)
+as select i.itemName, iv.quantity, g.gardenID
+from item i, inventory iv, Garden g
+group by g.gardenID;
+
+create view AdvisorInventoryTransView (itemName, quanity, gardenName, datePurchased, price)
+as select i.itemName, iv.quantity, g.gardenID, ivt.datePurchased, ivt.price
+from item i, inventory iv, Garden g, inventoryTrans ivt
+group by g.gardenID;
+

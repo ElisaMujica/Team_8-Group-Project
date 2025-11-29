@@ -7,12 +7,13 @@ VALUES
     ('Member', 'Garcia', 'Lizbeth'); 
 
 -- season population 
-INSERT INTO season (seasonName)
+INSERT INTO season (seasonID, seasonName)
 VALUES 
 	(1, 'Spring'),
     (2, 'Summer'),
     (3, 'Fall'),
     (4, 'Winter');
+	(5, 'Year round'); 
 
 -- Crop_info population 
 INSERT INTO Crop_Info (cropID, cropName, cropFamily) 

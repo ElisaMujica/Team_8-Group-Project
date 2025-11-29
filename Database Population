@@ -45,7 +45,7 @@ VALUES
     ( 2, 'Sustainability Garden'); 
 
 
---Crop_Season population 
+-- Crop_Season population 
 INSERT INTO Crop_Season (cropSeasonID, cropID, seasonID, soilType, sunNeeds)
 VALUES 
 	( 1, 1, 3, 'sand-loamy', 'full'), 

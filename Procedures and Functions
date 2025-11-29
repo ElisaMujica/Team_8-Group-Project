@@ -1,7 +1,6 @@
-User Defined functions: 
+#User Defined functions: 
 
-  3. Function that returns # of club members with/without reservations 
- 
+#Function that returns # of club members with/without reservations  
 Delimiter %%
 
 CREATE FUNCTION membersWithCurrentReservation()
@@ -39,10 +38,10 @@ BEGIN
 
 END %% 
 
-4. add a function named Semester that will concat semesterPlanted and yearPlanted to become one column 
- for example: carrots | fall | 2025 -> carrots | fall 2025
+#add a function named Semester that will concat semesterPlanted and yearPlanted to become one column 
+#for example: carrots | fall | 2025 -> carrots | fall 2025
 
-DELIMIER %%
+DELIMITER %%
 CREATE FUNCTION Semester(semester VARCHAR (8), year INT)
 RETURNS VARCHAR(15)
 DETERMINISTIC 
@@ -52,18 +51,19 @@ END%%
 
 Delimiter ; 
 
-Stored Procedures: 
-  1. Select statement that displays all the crops and their corresponding count of the crops that are planted in a particular garden
+#Stored Procedures: 
+# Select statement that displays all the crops and their corresponding count of the crops that are planted in a particular garden
+
 DELIMITER %%
 
-CREATER PROCEDURE CurrentCropsInGardensReport()
+CREATE PROCEDURE CurrentCropsInGardensReport()
 BEGIN
   SELECT 
   g.gardenID, 
   g.gardenLocation,
-  b.bedNO
-  ci.cropName 
-  s.seasonName as seasonality
+  b.bedNO,
+  ci.cropName, 
+  s.seasonName as seasonality,
   Count(*) as cropCount
   From Current_Crops AS cc
 
@@ -77,15 +77,16 @@ BEGIN
     ON cs.CropID = ci.cropID
   JOIN Season AS S
     ON cs.SeasonID = S.SeasonID
-  GROUP BY g..gardenID, g.gardenLocation, b.bedNO, ci.cropName, s.seasonName
+  GROUP BY g.gardenID, g.gardenLocation, b.bedNO, ci.cropName, s.seasonName
   ORDER BY g.gardenID, b.bedNO, cropCount DESC;
 
 END %%
 
+
 DELIMITER ;
 
 
-  2. Select statement that displays the beds which are not reserved (displays size, soilType, but NOT status)
+ #Select statement that displays the beds which are not reserved (displays size, soilType, but NOT status)
 DELIMITER %%
 
 CREATE PROCEDURE UnreservedBeds()
@@ -102,7 +103,7 @@ BEGIN
     ON b.gardenID = g.gardenID
   LEFT JOIN Reservation AS r  
     ON b.bedNO = r.bedNO
-  WHERE r.bedNO IS NULL
+  WHERE r.bedNO IS NULL;
 
 END %%
 
@@ -112,7 +113,7 @@ DELIMITER ;
   
 
 
-  3. Select statement that displays low stock inventory items with (less than 3 in inventory)
+#Select statement that displays low stock inventory items with (less than 3 in inventory)
 DELIMITER %% 
 
 CREATE PROCEDURE LowStockItems()
@@ -132,7 +133,7 @@ DELIMITER ;
   
 
 
-  4. Select statement that displays the last 1o inventory transactions
+#Select statement that displays the last 1o inventory transactions
 DELIMITER %%
 CREATE PROCEDURE Last10InventoryTransactions()
   BEGIN 
@@ -153,8 +154,3 @@ END %%
 DELIMITER ; 
 
 DELIMITER %%
-
-
-5. Create a query to keep track of the inventory i
-
-DE

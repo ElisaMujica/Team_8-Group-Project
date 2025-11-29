@@ -12,7 +12,7 @@ VALUES
 	(1, 'Spring'),
     (2, 'Summer'),
     (3, 'Fall'),
-    (4, 'Winter');
+    (4, 'Winter'),
 	(5, 'Year round'); 
 
 -- Crop_info population 

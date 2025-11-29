@@ -135,7 +135,7 @@ constraint inventoryFK2 foreign key (gardenID) references Garden(gardenID)
 create table inventoryTrans( 
 transactionNo int not null auto_increment,
 quantityChange	int not null,
-dataPurchased	date not null,
+datePurchased	date not null,
 price 	double	not null,
 itemID int not null,
 constraint inventoryTransPK primary key (transactionNo),

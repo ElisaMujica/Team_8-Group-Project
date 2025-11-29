@@ -157,4 +157,33 @@ DELIMITER ;
 #Select Statement displays the inventory quantity of each table
 DELIMITER %%
 
-CREATE PROCEDURE 
+DELIMITER $$
+
+CREATE PROCEDURE GetTotalItemQuantity(IN p_itemID INT)
+BEGIN
+    SELECT 
+        SUM(quantityChange) AS totalQuantity
+    FROM 
+        inventoryTrans
+    WHERE 
+        itemID = p_itemID;
+END$$
+
+DELIMITER ;
+
+DELIMITER %%
+
+CREATE PROCEDURE GetTotalItemQuantity(IN p_itemID INT)
+BEGIN
+    SELECT 
+        t.itemName,
+        SUM(i.quantity) AS totalQuantity
+    FROM 
+        inventory i
+    JOIN 
+        item t ON i.itemID = t.itemID
+    WHERE 
+        i.itemID = p_itemID;
+END$$
+
+DELIMITER ;

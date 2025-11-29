@@ -124,6 +124,7 @@ create table inventory (
 inventoryID int not null auto_increment,
 quantity int null,
 gardenID INT NOT NULL,
+itemID int not null,
 constraint inventoryPK primary key (inventoryID),
 constraint inventoryFK1 foreign key (itemID) references item(itemID),
 constraint inventoryFK2 foreign key (gardenID) references Garden(gardenID)

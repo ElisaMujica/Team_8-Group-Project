@@ -61,12 +61,10 @@ CREATE TABLE Bed (
     bedNO char(5) NOT NULL,
     size decimal(10, 2) NOT NULL,
     soilType char(10) NOT NULL,
-    bedStatus char(35) NOT NULL,
     gardenID INT NOT NULL,
     CONSTRAINT bedPK PRIMARY KEY (bedNO),
     CONSTRAINT bedSize CHECK (size > 0),
     CONSTRAINT bedSoilType CHECK (soilType IN ('sand-loamy', 'silt-loamy', 'sandy', 'loamy','clay-loamy','clay')),
-    CONSTRAINT bedStatusCheck CHECK (bedStatus IN ('Planted', 'Turned', 'Cover Crop', 'Reserved', 'Fertilized') ),
     CONSTRAINT gardenFK FOREIGN KEY (gardenID) REFERENCES Garden (gardenID)
 );
 
@@ -304,23 +302,6 @@ DELIMITER ;
 
 DELIMITER %%
 
-DELIMITER %%
-
-CREATE PROCEDURE GetTotalItemQuantity(IN p_itemID INT)
-BEGIN
-    SELECT 
-        t.itemName,
-        SUM(i.quantity) AS totalQuantity
-    FROM 
-        inventory i
-    JOIN 
-        item t ON i.itemID = t.itemID
-    WHERE 
-        i.itemID = p_itemID;
-END$$
-
-DELIMITER ;
-
 create view ClubMemberView (cropName, bedNo, gardenName, semesterPlanted, yearPlanted)
 as select c.cropName, b.bedNo, g.gardenID, c.semesterPlanted, c.yearPlanted
 from current_Crops c, Bed b, Garden g
@@ -342,5 +323,3 @@ create view AdvisorInventoryTransView (itemName, quanity, gardenName, datePurcha
 as select i.itemName, iv.quantity, g.gardenID, ivt.datePurchased, ivt.price
 from item i, inventory iv, Garden g, inventoryTrans ivt
 group by g.gardenID;
-
-

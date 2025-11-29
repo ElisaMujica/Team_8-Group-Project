@@ -1,3 +1,4 @@
+-- club_member population 
 INSERT INTO club_member (userType, lastName, firstName) 
 VALUES 
 	('Advisor', 'Penaba', 'Adriana' ), 
@@ -5,9 +6,33 @@ VALUES
     ('Officer', 'Mujica', 'Elisa'), 
     ('Member', 'Garcia', 'Lizbeth'); 
 
+-- season population 
 INSERT INTO season (seasonName)
 VALUES 
 	(1, 'Spring'),
     (2, 'Summer'),
     (3, 'Fall'),
-    (4, 'Winter'); 
+    (4, 'Winter');
+
+-- Crop_info population 
+INSERT INTO Crop_Info (cropID, cropName, cropFamily) 
+VALUES 
+	( 1, 'mexican mint' , 'non-rotation crop'), 
+    ( 2, 'okra' , 'non-rotation crop'), 
+    ( 3, 'onion' , 'Alliaceae'), 
+    ( 4, 'aloe vera' , 'non-rotation crop'), 
+    ( 5, 'tomatoes' , 'Solanaceae'), 
+    ( 6, 'cumin' , 'Umbelliferea'), 
+    ( 7, 'melon', 'Cucurbits'), 
+    ( 8, 'beets' , 'Chenopodiaceae'), 
+    ( 9, 'green beans' , 'Legumes'), 
+    ( 10, 'brocolli', 'Brassicas'), 
+    ( 11, 'squash' , 'Cucurbits'), 
+	( 12, 'sweet potato' , 'Solanaceae'), 
+	( 13, 'pak choi' , 'Brassicas'),
+    ( 14, 'loofah' , 'Cucurbits'), 
+    ( 15, 'cherry tomatoes' , 'Solanaceae'),
+    ( 16, 'peppers' , 'Solanaceae'),
+    ( 17, 'cauliflower', 'Brassicas'),
+    ( 18, 'eggplant' , 'Solanaceae'), 
+    ( 19, 'kale', 'Brassicas'); 

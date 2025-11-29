@@ -1,0 +1,155 @@
+User Defined functions: 
+
+  3. Function that returns # of club members with/without reservations 
+ 
+Delimiter%%
+
+CREATE FUNCTION membersWithCurrentReservation()
+RETURNS INT 
+DETERMINISTIC 
+BEGIN 
+  DECLARE reserved INT; 
+
+  SELECT COUNT(DISTINCT userID) 
+  From RESERVATION;
+
+  RETURN reservation; 
+
+END %% 
+
+Delimiter ; 
+
+DELIMITER %%
+
+CREATE FUNCTION membersWithNoCurrentReservation()
+RETURNS INT 
+DETERMINISTIC 
+BEGIN 
+  DECLARE notReserved INT; 
+
+  SELECT COUNT(*) 
+  INTO reservations
+  FROM ClubMember
+  WHERE userID 
+        NOT IN(
+          SELECT userID FROM Reservation
+        ); 
+
+  RETURN notReserved; 
+
+END %% 
+
+4. add a function named Semester that will concat semesterPlanted and yearPlanted to become one column 
+ for example: carrots | fall | 2025 -> carrots | fall 2025
+
+DELIMIER %%
+CREATE FUNCTION Semester(semester VARCHAR (8), year INT)
+RETURNS VARCHAR(15)
+DETERMINISTIC 
+BEGIN 
+  RETURN CONCAT (semester, ' ' , year); 
+END%%
+
+Delimiter ; 
+
+Stored Procedures: 
+  1. Select statement that displays all the crops and their corresponding count of the crops that are planted in a particular garden
+DELIMITER %%
+
+CREATER PROCEDURE CurrentCropsInGardensReport()
+BEGIN
+  SELECT 
+  g.gardenID, 
+  g.gardenLocation,
+  b.bedNO
+  ci.cropName 
+  s.seasonName as seasonality
+  Count(*) as cropCount
+  From Current_Crops AS cc
+
+  JOIN Bed AS b 
+    ON cc.bedNO = b.bedNO
+  JOIN Garden AS g 
+    ON b.gardenID = g.gardenID
+  JOIN Crop_Season as cs
+    ON cc.cropID = cs.CropID AND cc.seasonID = cs.seasonID
+  JOIN Crop_Info AS ci 
+    ON cs.CropID = ci.cropID
+  JOIN Season AS S
+    ON cs.SeasonID = S.SeasonID
+  GROUP BY g..gardenID, g.gardenLocation, b.bedNO, ci.cropName, s.seasonName
+  ORDER BY g.gardenID, b.bedNO, cropCount DESC;
+
+END %%
+
+DELIMITER ;
+
+
+  2. Select statement that displays the beds which are not reserved (displays size, soilType, but NOT status)
+DELIMITER %%
+
+CREATE PROCEDURE UnreservedBeds()
+BEGIN
+  SELECT
+    b.bedNo, 
+    b.gardenID, 
+    g.gardenLocation, 
+    b.size, 
+    b.soilType,  
+    b.bedStatus
+  FROM Bed as b
+  JOIN Garden as g
+    ON b.gardenID = g.gardenID
+  LEFT JOIN Reservation AS r  
+    ON b.bedNO = r.bedNO
+  WHERE r.bedNO IS NULL
+
+END %%
+
+DELIMITER ; 
+
+
+  
+
+
+  3. Select statement that displays low stock inventory items with (less than 3 in inventory)
+DELIMITER %% 
+
+CREATE PROCEDURE LowStockItems()
+BEGIN
+  SELECT
+    i.itemName,
+    inv.gardenID,
+    inv.quantity 
+  FROM inventory as inv
+  JOIN item as i 
+    ON inv.itemID = i.itemID
+  WHERE inv.quantity < 3 
+  ORDER BY inv.quantity ASC; 
+END %%
+
+DELIMITER ; 
+  
+
+
+  4. Select statement that displays the last 1o inventory transactions
+DELIMITER %%
+CREATE PROCEDURE Last10InventoryTransactions()
+  BEGIN 
+  SELECT
+    t.transactionNo, 
+    t.quantityChange,     
+    t.datePurchased,
+    t.price,
+    i.itemName
+FROM 
+  inventoryTrans AS t
+  JOIN item as i on t.itemID = i.itemID
+  ORDER BY t.transactionNo DESC
+  LIMIT 10; 
+
+END %% 
+
+DELIMITER ; 
+
+DELIMITER %%

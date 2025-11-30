@@ -1,25 +1,37 @@
-create view CSTGardenView 
-as select c.cropName, b.bedNo, g.gardenLocation AS gardenName, c.semesterPlanted, c.yearPlanted
-from current_Crops c
-join Bed b ON c.bedNo = b.bedNo
-join Garden g ON b.gardenID = g.gardenID
-where g.gardenID = 1
-order by b.bedNo;
+CREATE VIEW CSTGardenView AS
+SELECT 
+    ci.cropName,
+    b.bedNO,
+    g.gardenLocation AS gardenName,
+    c.semesterPlanted,
+    c.yearPlanted
+FROM Current_Crops ci
+JOIN Bed b ON c.bedNO = b.bedNO
+JOIN Garden g ON b.gardenID = g.gardenID
+JOIN Crop_Season cs ON c.cropSeasonID = cs.cropSeasonID
+JOIN Crop_Info ci ON cs.cropID = ci.cropID
+WHERE g.gardenID = 1
+ORDER BY b.bedNO;
 
-create view SUSGardenView 
-as select c.cropName, b.bedNo, g.gardenLocation AS gardenName, c.semesterPlanted, c.yearPlanted
-from current_Crops c
-join Bed b ON c.bedNo = b.bedNo
-join Garden g ON b.gardenID = g.gardenID
-where g.gardenID = 2
-order by b.bedNo;
+CREATE VIEW SUSGardenView AS
+SELECT 
+    c.cropName,
+    b.bedNO,
+    g.gardenLocation AS gardenName,
+    c.semesterPlanted,
+    c.yearPlanted
+FROM Current_Crops c
+JOIN Bed b ON c.bedNO = b.bedNO
+JOIN Garden g ON b.gardenID = g.gardenID
+WHERE g.gardenID = 2
+ORDER BY b.bedNO;
 
 create view CurrentCropView
-as select c.cropName, b.bedNo, g.gardenLocation AS gardenName, c.semesterPlanted, c.yearPlanted
+as select c.cropName, b.bedNO, g.gardenLocation AS gardenName, c.semesterPlanted, c.yearPlanted
 from Current_Crops c
-join Bed b ON c.bedNo = b.bedNo
+join Bed b ON c.bedNO = b.bedNO
 join Garden g ON b.gardenID = g.gardenID
-order by b.bedNo;
+order by b.bedNO;
 
 create view OfficerViewInventory
 as select i.itemName, iv.quantity, g.gardenLocation AS gardenName

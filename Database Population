@@ -95,5 +95,7 @@ VALUES
     ('SUSB3', 32, 'sand-loamy', 2),
     ('SUSB4', 32, 'silt-loamy', 2),
     ('SUSB5', 32, 'sandy', 2); 
-    
-    
+
+INSERT INTO Current_Crops(bedNO, cropSeasonID, plantStatus, semesterPlanted, yearPlanted)
+VALUES 	
+	('CSTB1', 19, 'hardening', 'Fall', 2025), 

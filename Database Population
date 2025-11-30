@@ -81,17 +81,19 @@ VALUES
     ( 31, 19, 3, 'silt-loamy', 'partial'), 
 	( 32, 19, 4, 'silt-loamy', 'partial'); 
     
-    INSERT INTO Bed (bedNO, size, soilType, gardenID)
+   INSERT INTO Bed (bedNO, size, soilType, gardenID)
 VALUES 
-	('B1', 32, 'sand-loamy', 1),
-    ('B2', 32, 'sand-loamy', 1),
-    ('B3', 32, 'silt-loamy', 1),
-    ('B4', 32, 'sand-loamy', 1),
-    ('B5', 32, 'silt-loamy', 1),
-    ('B6', 32, 'sand-loamy', 1),
-    ('B7', 32, 'sandy', 1),
-    ('B1', 32, 'silt-loamy', 2),
-    ('B2', 32, 'silt-loamy', 2),
-    ('B3', 32, 'sand-loamy', 2),
-    ('B4', 32, 'silt-loamy', 2),
-    ('B5', 32, 'sandy', 2); 
+	('CSTB1', 32, 'sand-loamy', 1),
+    ('CSTB2', 32, 'sand-loamy', 1),
+    ('CSTB3', 32, 'silt-loamy', 1),
+    ('CSTB4', 32, 'sand-loamy', 1),
+    ('CSTB5', 32, 'silt-loamy', 1),
+    ('CSTB6', 32, 'sand-loamy', 1),
+    ('CSTB7', 32, 'sandy', 1),
+    ('SUSB1', 32, 'silt-loamy', 2),
+    ('SUSB2', 32, 'silt-loamy', 2),
+    ('SUSB3', 32, 'sand-loamy', 2),
+    ('SUSB4', 32, 'silt-loamy', 2),
+    ('SUSB5', 32, 'sandy', 2); 
+    
+    

@@ -99,3 +99,13 @@ VALUES
 INSERT INTO Current_Crops(bedNO, cropSeasonID, plantStatus, semesterPlanted, yearPlanted)
 VALUES 	
 	('CSTB1', 19, 'hardening', 'Fall', 2025), 
+    ('CSTB2', 15 , 'hardening', 'Fall', 2025), 
+    ('CSTB3', 13, 'repotted', 'Fall', 2025), 
+    ('CSTB4', 10, 'germinating', 'Fall', 2025), 
+    ('CSTB5', 4, 'hardening',  'Fall', 2025), 
+    ('CSTB6', 1, 'repotted', 'Fall', 2025),
+    ('CSTB7', 6, 'planted', 'Spring', 2022), 
+	('SUSB1', 29 , 'planted', 'Spring', 2025), 
+    ('SUSB2', 27, 'hardening', 'Fall', 2025), 
+    ('SUSB3', 3, 'planted', 'Spring', 2025), 
+    ('SUSB4', 21, 'hardening', 'Fall', 2025); 

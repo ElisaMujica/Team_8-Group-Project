@@ -76,10 +76,16 @@ cropSeasonID int NOT NULL,
 cropName char(35) NOT NULL,
 plantStatus char(25) DEFAULT NULL,
 cropID int NOT NULL,
+bedNO CHAR(5) NOT NULL,
 semesterPlanted char(10) not null,
 yearPlanted int not null,
-CONSTRAINT currentCropPK PRIMARY KEY (cropName),
-CONSTRAINT cropIdFK FOREIGN KEY (cropID) REFERENCES Crop_Info (cropID),
+CONSTRAINT currentCropPK PRIMARY KEY (cropSeasonID),
+CONSTRAINT cropIdFK FOREIGN KEY (cropID) REFERENCES Crop_Info (cropID)
+		ON UPDATE CASCADE 
+        ON DELETE RESTRICT,
+CONSTRAINT currentCropsBedFK FOREIGN KEY (bedNO) REFERENCES Bed(bedNO)
+        ON UPDATE CASCADE 
+        ON DELETE RESTRICT,
 constraint semesterCheck check (semesterPlanted in ('Spring', 'Summer', 'Fall'))
 );
 
@@ -303,24 +309,50 @@ DELIMITER ;
 
 DELIMITER %%
 
-create view ClubMemberView (cropName, bedNo, gardenName, semesterPlanted, yearPlanted)
-as select c.cropName, b.bedNo, g.gardenID, c.semesterPlanted, c.yearPlanted
-from current_Crops c, Bed b, Garden g
-where bedStatus != 'Reserved'
-group by b.bedNo;
+CREATE VIEW CSTGardenView AS
+SELECT 
+    c.cropName,
+    b.bedNO,
+    g.gardenLocation AS gardenName,
+    c.semesterPlanted,
+    c.yearPlanted
+FROM Current_Crops c
+JOIN Bed b ON c.bedNO = b.bedNO
+JOIN Garden g ON b.gardenID = g.gardenID
+WHERE g.gardenID = 1
+ORDER BY b.bedNO;
 
+CREATE VIEW SUSGardenView AS
+SELECT 
+    c.cropName,
+    b.bedNO,
+    g.gardenLocation AS gardenName,
+    c.semesterPlanted,
+    c.yearPlanted
+FROM Current_Crops c
+JOIN Bed b ON c.bedNO = b.bedNO
+JOIN Garden g ON b.gardenID = g.gardenID
+WHERE g.gardenID = 2
+ORDER BY b.bedNO;
+create view CurrentCropView
+as select c.cropName, b.bedNO, g.gardenLocation AS gardenName, c.semesterPlanted, c.yearPlanted
+from Current_Crops c
+join Bed b ON c.bedNO = b.bedNO
+join Garden g ON b.gardenID = g.gardenID
+order by b.bedNO;
 
-create view CurrentCropView (cropName, bedNo, gardenName, semesterPlanted, yearPlanted)
-as select c.cropName, b.bedNo, g.gardenID, c.semesterPlanted, c.yearPlanted
-from Current_Crops c, Bed b, Garden g
-group by b.bedNo;
+create view OfficerViewInventory
+as select i.itemName, iv.quantity, g.gardenLocation AS gardenName
+from inventory iv
+join item i ON iv.inventoryID = iv.inventoryID 
+join Garden g ON iv.gardenID = g.gardenID
+order by g.gardenLocation;
 
-create view OfficerViewInventory (itemName, quanity, gardenName)
-as select i.itemName, iv.quantity, g.gardenID
-from item i, inventory iv, Garden g
-group by g.gardenID;
+create view AdvisorInventoryTransView
+as select i.itemName, iv.quantity, g.gardenLocation AS gardenName, ivt.datePurchased, ivt.price
+from inventoryTrans ivt
+join item i ON ivt.itemID = i.itemID
+join inventory iv ON ivt.inventoryID = iv.inventoryID
+join Garden g ON iv.gardenID = g.gardenID
+order by ivt.datePurchased DESC, i.itemName;
 
-create view AdvisorInventoryTransView (itemName, quanity, gardenName, datePurchased, price)
-as select i.itemName, iv.quantity, g.gardenID, ivt.datePurchased, ivt.price
-from item i, inventory iv, Garden g, inventoryTrans ivt
-group by g.gardenID;

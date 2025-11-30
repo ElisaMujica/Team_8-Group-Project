@@ -7,7 +7,7 @@ VALUES
     ('Member', 'Garcia', 'Lizbeth'); 
 
 -- season population 
-INSERT INTO season (seasonID, seasonName)
+INSERT INTO Season (seasonID, seasonName)
 VALUES 
 	(1, 'Spring'),
     (2, 'Summer'),

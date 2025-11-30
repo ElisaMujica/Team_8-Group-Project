@@ -130,3 +130,15 @@ INSERT INTO item (itemID, itemName, itemType) VALUES
 (5, 'Chicken Wire', 'Fencing'),
 (6, '9ft Plastic Sheet', 'Plastic'),
 (7, 'Crane Scales', 'Tool');
+
+INSERT INTO Inventory (itemID, gardenID, quantity)
+VALUES 
+(1, 1, 5), 
+(2, 2, 3), 
+(3, 1, 2), 
+(4, 1, 4), 
+(5, 2, 1) ,
+(6, 2, 1), 
+(7, 1, 2); 
+
+

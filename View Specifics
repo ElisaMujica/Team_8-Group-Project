@@ -1,5 +1,21 @@
-CREATE VIEW CSTGardenView AS
-SELECT 
+
+CREATE OR REPLACE VIEW GardenView AS
+SELECT
+    ci.cropName,
+    b.bedNO,
+    g.gardenLocation AS gardenName,
+    c.semesterPlanted,
+    c.yearPlanted,
+    g.gardenID
+FROM Current_Crops c
+JOIN Bed b ON c.bedNO = b.bedNO
+JOIN Garden g ON b.gardenID = g.gardenID
+JOIN Crop_Season cs ON c.cropSeasonID = cs.cropSeasonID
+JOIN Crop_Info ci ON cs.cropID = ci.cropID
+ORDER BY b.bedNO;
+
+CREATE OR REPLACE VIEW CurrentCropView AS
+SELECT
     ci.cropName,
     b.bedNO,
     g.gardenLocation AS gardenName,
@@ -10,40 +26,27 @@ JOIN Bed b ON c.bedNO = b.bedNO
 JOIN Garden g ON b.gardenID = g.gardenID
 JOIN Crop_Season cs ON c.cropSeasonID = cs.cropSeasonID
 JOIN Crop_Info ci ON cs.cropID = ci.cropID
-WHERE g.gardenID = 1
 ORDER BY b.bedNO;
 
-CREATE VIEW SUSGardenView AS
-SELECT 
-    c.cropName,
-    b.bedNO,
+CREATE OR REPLACE VIEW OfficerViewInventory AS
+SELECT
+    i.itemName,
+    iv.quantity,
+    g.gardenLocation AS gardenName
+FROM inventory iv
+JOIN item i ON iv.itemID = i.itemID
+JOIN Garden g ON iv.gardenID = g.gardenID
+ORDER BY g.gardenLocation;
+
+CREATE OR REPLACE VIEW AdvisorInventoryTransView AS
+SELECT
+    i.itemName,
+    iv.quantity,
     g.gardenLocation AS gardenName,
-    c.semesterPlanted,
-    c.yearPlanted
-FROM Current_Crops c
-JOIN Bed b ON c.bedNO = b.bedNO
-JOIN Garden g ON b.gardenID = g.gardenID
-WHERE g.gardenID = 2
-ORDER BY b.bedNO;
-
-create view CurrentCropView
-as select c.cropName, b.bedNO, g.gardenLocation AS gardenName, c.semesterPlanted, c.yearPlanted
-from Current_Crops c
-join Bed b ON c.bedNO = b.bedNO
-join Garden g ON b.gardenID = g.gardenID
-order by b.bedNO;
-
-create view OfficerViewInventory
-as select i.itemName, iv.quantity, g.gardenLocation AS gardenName
-from inventory iv
-join item i ON iv.inventoryID = iv.inventoryID 
-join Garden g ON iv.gardenID = g.gardenID
-order by g.gardenLocation;
-
-create view AdvisorInventoryTransView
-as select i.itemName, iv.quantity, g.gardenLocation AS gardenName, ivt.datePurchased, ivt.price
-from inventoryTrans ivt
-join item i ON ivt.itemID = i.itemID
-join inventory iv ON ivt.inventoryID = iv.inventoryID
-join Garden g ON iv.gardenID = g.gardenID
-order by ivt.datePurchased DESC, i.itemName;
+    ivt.datePurchased,
+    ivt.price
+FROM inventoryTrans ivt
+JOIN item i ON ivt.itemID = i.itemID
+JOIN inventory iv ON ivt.inventoryID = iv.inventoryID
+JOIN Garden g ON iv.gardenID = g.gardenID
+ORDER BY ivt.datePurchased DESC, i.itemName;

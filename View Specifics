@@ -5,7 +5,7 @@ SELECT
     g.gardenLocation AS gardenName,
     c.semesterPlanted,
     c.yearPlanted
-FROM Current_Crops ci
+FROM Current_Crops c
 JOIN Bed b ON c.bedNO = b.bedNO
 JOIN Garden g ON b.gardenID = g.gardenID
 JOIN Crop_Season cs ON c.cropSeasonID = cs.cropSeasonID

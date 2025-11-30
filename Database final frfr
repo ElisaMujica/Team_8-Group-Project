@@ -72,21 +72,26 @@ CREATE TABLE Bed (
 DROP TABLE IF EXISTS Current_Crops;
 
 CREATE TABLE Current_Crops (
-cropSeasonID int NOT NULL,
-cropName char(35) NOT NULL,
-plantStatus char(25) DEFAULT NULL,
-cropID int NOT NULL,
-bedNO CHAR(5) NOT NULL,
-semesterPlanted char(10) not null,
-yearPlanted int not null,
-CONSTRAINT currentCropPK PRIMARY KEY (cropSeasonID),
-CONSTRAINT cropIdFK FOREIGN KEY (cropID) REFERENCES Crop_Info (cropID)
-		ON UPDATE CASCADE 
-        ON DELETE RESTRICT,
-CONSTRAINT currentCropsBedFK FOREIGN KEY (bedNO) REFERENCES Bed(bedNO)
-        ON UPDATE CASCADE 
-        ON DELETE RESTRICT,
-constraint semesterCheck check (semesterPlanted in ('Spring', 'Summer', 'Fall'))
+    currentCropID INT NOT NULL AUTO_INCREMENT,
+    bedNO CHAR(5) NOT NULL,
+    cropSeasonID INT NOT NULL,
+    plantStatus CHAR(25),
+    semesterPlanted CHAR(10) NOT NULL,
+    yearPlanted INT NOT NULL,
+
+    CONSTRAINT CurrentCropsPK 
+        PRIMARY KEY (currentCropID),
+
+    CONSTRAINT CurrentCropsBedFK 
+        FOREIGN KEY (bedNO) REFERENCES Bed(bedNO)
+        ON UPDATE CASCADE ON DELETE RESTRICT,
+
+    CONSTRAINT CurrentCropsCropSeasonFK 
+        FOREIGN KEY (cropSeasonID) REFERENCES Crop_Season(cropSeasonID)
+        ON UPDATE CASCADE ON DELETE RESTRICT,
+
+    CONSTRAINT SemesterCheck 
+        CHECK (semesterPlanted IN ('Spring','Summer','Fall'))
 );
 
 

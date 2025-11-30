@@ -45,8 +45,8 @@ sunNeeds char(10) NOT NULL,
 CONSTRAINT Crop_SeasonPK PRIMARY KEY (cropSeasonID),
 CONSTRAINT Crop_InfoFK FOREIGN KEY (cropID) REFERENCES Crop_Info (cropID),
 CONSTRAINT SeasonFK FOREIGN KEY (seasonID) REFERENCES Season (seasonID),
-CONSTRAINT sunNeedsValues CHECK (sunNeeds in ('partial','full'))
-CONSTRAINT CropSeasonSoilTypeCheck CHECK (soilType IN ('sand-loamy', 'silt-loamy', 'sandy', 'loamy','clay-loamy','clay')),
+CONSTRAINT sunNeedsValues CHECK (sunNeeds in ('partial','full')),
+CONSTRAINT CropSeasonSoilTypeCheck CHECK (soilType IN ('sand-loamy', 'silt-loamy', 'sandy', 'loamy','clay-loamy','clay'))
 );
 
 --

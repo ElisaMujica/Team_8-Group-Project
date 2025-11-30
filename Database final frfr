@@ -9,7 +9,7 @@ USE group_project_team8;
 
 DROP TABLE IF EXISTS Crop_Info;
 CREATE TABLE Crop_Info (
-cropID int NOT NULL,
+cropID int NOT NULL AUTO_INCREMENT,
 cropName char(35) NOT NULL,
 cropFamily char(35) NOT NULL,
 CONSTRAINT cropInfoPK PRIMARY KEY (cropID),
@@ -37,7 +37,7 @@ CONSTRAINT seasonValues CHECK (seasonName in ('Spring','Summer','Fall','Winter',
 
 DROP TABLE IF EXISTS Crop_Season;
 CREATE TABLE Crop_Season (
-cropSeasonID int NOT NULL,
+cropSeasonID int NOT NULL AUTO_INCREMENT,
 cropID int NOT NULL,
 seasonID int NOT NULL,
 soilType char(10) NOT NULL,
@@ -46,6 +46,7 @@ CONSTRAINT Crop_SeasonPK PRIMARY KEY (cropSeasonID),
 CONSTRAINT Crop_InfoFK FOREIGN KEY (cropID) REFERENCES Crop_Info (cropID),
 CONSTRAINT SeasonFK FOREIGN KEY (seasonID) REFERENCES Season (seasonID),
 CONSTRAINT sunNeedsValues CHECK (sunNeeds in ('partial','full'))
+CONSTRAINT CropSeasonSoilTypeCheck CHECK (soilType IN ('sand-loamy', 'silt-loamy', 'sandy', 'loamy','clay-loamy','clay')),
 );
 
 --

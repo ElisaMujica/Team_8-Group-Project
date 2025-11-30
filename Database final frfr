@@ -316,7 +316,7 @@ DELIMITER %%
 
 CREATE VIEW CSTGardenView AS
 SELECT 
-    c.cropName,
+    ci.cropName,
     b.bedNO,
     g.gardenLocation AS gardenName,
     c.semesterPlanted,
@@ -324,12 +324,14 @@ SELECT
 FROM Current_Crops c
 JOIN Bed b ON c.bedNO = b.bedNO
 JOIN Garden g ON b.gardenID = g.gardenID
+JOIN Crop_Season cs ON c.cropSeasonID = cs.cropSeasonID
+JOIN Crop_Info ci ON cs.cropID = ci.cropID
 WHERE g.gardenID = 1
 ORDER BY b.bedNO;
 
 CREATE VIEW SUSGardenView AS
 SELECT 
-    c.cropName,
+    ci.cropName,
     b.bedNO,
     g.gardenLocation AS gardenName,
     c.semesterPlanted,
@@ -337,8 +339,12 @@ SELECT
 FROM Current_Crops c
 JOIN Bed b ON c.bedNO = b.bedNO
 JOIN Garden g ON b.gardenID = g.gardenID
+JOIN Crop_Season cs ON c.cropSeasonID = cs.cropSeasonID
+JOIN Crop_Info ci ON cs.cropID = ci.cropID
 WHERE g.gardenID = 2
 ORDER BY b.bedNO;
+
+
 create view CurrentCropView
 as select c.cropName, b.bedNO, g.gardenLocation AS gardenName, c.semesterPlanted, c.yearPlanted
 from Current_Crops c
@@ -360,4 +366,3 @@ join item i ON ivt.itemID = i.itemID
 join inventory iv ON ivt.inventoryID = iv.inventoryID
 join Garden g ON iv.gardenID = g.gardenID
 order by ivt.datePurchased DESC, i.itemName;
-

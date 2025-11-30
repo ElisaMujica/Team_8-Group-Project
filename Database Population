@@ -109,3 +109,14 @@ VALUES
     ('SUSB2', 27, 'hardening', 'Fall', 2025), 
     ('SUSB3', 3, 'planted', 'Spring', 2025), 
     ('SUSB4', 21, 'hardening', 'Fall', 2025); 
+
+INSERT INTO Reservation(userID, bedNO, semesterAssigned)  
+VALUES
+(1, 'CSTB1', '2025-11-29'),
+(1, 'CSTB2', '2025-01-20'),
+(2, 'CSTB3', '2025-07-09'),
+(2, 'CSTB7', '2025-07-09'),
+(3, 'CSTB4', '2024-12-31'),
+(3, 'SUSB1', '2024-12-31'),
+(4, 'CSTB5', '2025-06-29'),
+(4, 'SUSB5', '2025-06-29'); 

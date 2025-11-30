@@ -1,4 +1,5 @@
 #Team_8 Project #Database Creation file
+#By Elisa Mujica, Juan Ruiz, and Roland Klahitar
 
 CREATE DATABASE IF NOT EXISTS group_project_team8;
 USE group_project_team8;

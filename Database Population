@@ -120,3 +120,13 @@ VALUES
 (3, 'SUSB1', '2024-12-31'),
 (4, 'CSTB5', '2025-06-29'),
 (4, 'SUSB5', '2025-06-29'); 
+
+
+INSERT INTO item (itemID, itemName, itemType) VALUES
+(1, '9ft 2x4s', 'Lumber'),
+(2, '9ft Zinc Sheets', 'Metal'),
+(3, 'Sliding Latches', 'Hardware'),
+(4, '6in Heavy Duty Hinges', 'Hardware'),
+(5, 'Chicken Wire', 'Fencing'),
+(6, '9ft Plastic Sheet', 'Plastic'),
+(7, 'Crane Scales', 'Tool');

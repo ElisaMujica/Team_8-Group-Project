@@ -1,63 +1,54 @@
-#Team_ Project #Database Creation file
-#Notes: If changes need to be made to design, please add comment and make change in database design: https://lucid.app/lucidchart/7184eecd-2be3-4a9c-980e-153cd7cb40c1/edit?invitationId=inv_97aa72d9-8241-4889-939a-19b138899679&page=0_0#
-#
-#
-##############################################################################################
+#Team_8 Project #Database Creation file
+
 CREATE DATABASE IF NOT EXISTS group_project_team8;
 USE group_project_team8;
 
+##############################################################################################
 
 DROP TABLE IF EXISTS Crop_Info;
 CREATE TABLE Crop_Info (
-cropID int NOT NULL AUTO_INCREMENT,
-cropName char(35) NOT NULL,
-cropFamily char(35) NOT NULL,
-CONSTRAINT cropInfoPK PRIMARY KEY (cropID),
-CONSTRAINT cropNameAK UNIQUE (cropName),
-CONSTRAINT cropFamilyValues CHECK (cropFamily in ('Alliaceae','non-rotation crop','Solanaceae','Umbelliferea','Cucurbits','Chenopodiaceae','Legumes','Brassicas'))
+    cropID int NOT NULL AUTO_INCREMENT,
+    cropName char(35) NOT NULL,
+    cropFamily char(35) NOT NULL,
+    CONSTRAINT cropInfoPK PRIMARY KEY (cropID),
+    CONSTRAINT cropNameAK UNIQUE (cropName),
+    CONSTRAINT cropFamilyValues CHECK (cropFamily in ('Alliaceae','non-rotation crop','Solanaceae','Umbelliferea','Cucurbits','Chenopodiaceae','Legumes','Brassicas'))
 );
 
---
--- Table structure for table Season
---
 
 DROP TABLE IF EXISTS Season;
-
 CREATE TABLE Season (
-seasonID int NOT NULL,
-seasonName char(10) NOT NULL,
-CONSTRAINT seasonPK PRIMARY KEY (seasonID),
-UNIQUE KEY seasonAK (seasonName),
-CONSTRAINT seasonValues CHECK (seasonName in ('Spring','Summer','Fall','Winter','Year Round'))
+    seasonID int NOT NULL,
+    seasonName char(10) NOT NULL,
+    CONSTRAINT seasonPK PRIMARY KEY (seasonID),
+    UNIQUE KEY seasonAK (seasonName),
+    CONSTRAINT seasonValues CHECK (seasonName in ('Spring','Summer','Fall','Winter','Year Round'))
 );
 
---
--- Table structure for table Crop_Season
---
 
 DROP TABLE IF EXISTS Crop_Season;
 CREATE TABLE Crop_Season (
-cropSeasonID int NOT NULL AUTO_INCREMENT,
-cropID int NOT NULL,
-seasonID int NOT NULL,
-soilType char(10) NOT NULL,
-sunNeeds char(10) NOT NULL,
-CONSTRAINT Crop_SeasonPK PRIMARY KEY (cropSeasonID),
-CONSTRAINT Crop_InfoFK FOREIGN KEY (cropID) REFERENCES Crop_Info (cropID),
-CONSTRAINT SeasonFK FOREIGN KEY (seasonID) REFERENCES Season (seasonID),
-CONSTRAINT sunNeedsValues CHECK (sunNeeds in ('partial','full')),
-CONSTRAINT CropSeasonSoilTypeCheck CHECK (soilType IN ('sand-loamy', 'silt-loamy', 'sandy', 'loamy','clay-loamy','clay'))
+    cropSeasonID int NOT NULL AUTO_INCREMENT,
+    cropID int NOT NULL,
+    seasonID int NOT NULL,
+    soilType char(10) NOT NULL,
+    sunNeeds char(10) NOT NULL,
+    CONSTRAINT Crop_SeasonPK PRIMARY KEY (cropSeasonID),
+    CONSTRAINT Crop_InfoFK FOREIGN KEY (cropID) REFERENCES Crop_Info (cropID),
+    CONSTRAINT SeasonFK FOREIGN KEY (seasonID) REFERENCES Season (seasonID),
+    CONSTRAINT sunNeedsValues CHECK (sunNeeds in ('partial','full')),
+    CONSTRAINT CropSeasonSoilTypeCheck CHECK (soilType IN ('sand-loamy', 'silt-loamy', 'sandy', 'loamy','clay-loamy','clay'))
 );
 
---
--- Table structure for table Garden
---
-Create TABLE Garden (
-gardenID INT NOT NULL,
-gardenLocation Char(30),
-CONSTRAINT gardenPK PRIMARY KEY (gardenID)
+DROP TABLE IF EXISTS Garden;
+CREATE TABLE Garden (
+    gardenID INT NOT NULL,
+    gardenLocation Char(30),
+    CONSTRAINT gardenPK PRIMARY KEY (gardenID)
 );
 
+
+DROP TABLE IF EXISTS Bed;
 CREATE TABLE Bed (
     bedNO char(5) NOT NULL,
     size decimal(10, 2) NOT NULL,
@@ -69,8 +60,8 @@ CREATE TABLE Bed (
     CONSTRAINT gardenFK FOREIGN KEY (gardenID) REFERENCES Garden (gardenID)
 );
 
-DROP TABLE IF EXISTS Current_Crops;
 
+DROP TABLE IF EXISTS Current_Crops;
 CREATE TABLE Current_Crops (
     currentCropID INT NOT NULL AUTO_INCREMENT,
     bedNO CHAR(5) NOT NULL,
@@ -78,244 +69,204 @@ CREATE TABLE Current_Crops (
     plantStatus CHAR(25),
     semesterPlanted CHAR(10) NOT NULL,
     yearPlanted INT NOT NULL,
-
-    CONSTRAINT CurrentCropsPK 
-        PRIMARY KEY (currentCropID),
-
-    CONSTRAINT CurrentCropsBedFK 
-        FOREIGN KEY (bedNO) REFERENCES Bed(bedNO)
+    CONSTRAINT CurrentCropsPK PRIMARY KEY (currentCropID),
+    CONSTRAINT CurrentCropsBedFK FOREIGN KEY (bedNO) REFERENCES Bed(bedNO)
         ON UPDATE CASCADE ON DELETE RESTRICT,
-
-    CONSTRAINT CurrentCropsCropSeasonFK 
-        FOREIGN KEY (cropSeasonID) REFERENCES Crop_Season(cropSeasonID)
+    CONSTRAINT CurrentCropsCropSeasonFK FOREIGN KEY (cropSeasonID) REFERENCES Crop_Season(cropSeasonID)
         ON UPDATE CASCADE ON DELETE RESTRICT,
-
-    CONSTRAINT SemesterCheck 
-        CHECK (semesterPlanted IN ('Spring','Summer','Fall'))
+    CONSTRAINT SemesterCheck CHECK (semesterPlanted IN ('Spring','Summer','Fall'))
 );
 
 
-
-#Add club member table 
-Create table club_member(
-userID	int not null auto_increment,
-userType char(10) not null,
-lastName char(35) 	not null,
-firstName char(35)	not null,
-phoneNumber VARCHAR(15) UNIQUE,
-email		char(35) null,
-constraint 	ClubMemberPK primary key (userID),
-constraint 	ClubMemberAK unique (phoneNumber),
-constraint userTypeCheck Check (userType in ('Advisor','Officer','Reserver','Member'))
+DROP TABLE IF EXISTS club_member;
+CREATE TABLE club_member (
+    userID int NOT NULL AUTO_INCREMENT,
+    userType char(10) NOT NULL,
+    lastName char(35) NOT NULL,
+    firstName char(35) NOT NULL,
+    phoneNumber VARCHAR(15) UNIQUE,
+    email char(35) NULL,
+    CONSTRAINT ClubMemberPK PRIMARY KEY (userID),
+    CONSTRAINT ClubMemberAK UNIQUE (phoneNumber),
+    CONSTRAINT userTypeCheck CHECK (userType in ('Advisor','Officer','Reserver','Member'))
 );
 
-#Add reservation
-create table Reservation (
-userID int not null,
-bedNo char(5) not null,
-semesterAssigned date not null,
-constraint ReservationPK primary key (userID, bedNo),
-constraint ReservationFK foreign key (bedNo) references Bed(bedNO)
-	ON UPDATE CASCADE ON DELETE RESTRICT,
-constraint ReservationFK2 foreign key (userID) references club_member(userID)
-	ON UPDATE CASCADE ON DELETE RESTRICT
+
+DROP TABLE IF EXISTS Reservation;
+CREATE TABLE Reservation (
+    userID int NOT NULL,
+    bedNo char(5) NOT NULL,
+    semesterAssigned date NOT NULL,
+    CONSTRAINT ReservationPK PRIMARY KEY (userID, bedNo),
+    CONSTRAINT ReservationFK FOREIGN KEY (bedNo) REFERENCES Bed(bedNO)
+        ON UPDATE CASCADE ON DELETE RESTRICT,
+    CONSTRAINT ReservationFK2 FOREIGN KEY (userID) REFERENCES club_member(userID)
+        ON UPDATE CASCADE ON DELETE RESTRICT
 );
 
-#Add item table
-create table item (
-itemID int not null auto_increment,
-itemName char(35)	not null,
-itemType 	char(15)	null,
-constraint itemPK primary key (itemID)
+
+DROP TABLE IF EXISTS item;
+CREATE TABLE item (
+    itemID int NOT NULL AUTO_INCREMENT,
+    itemName char(35) NOT NULL,
+    itemType char(15) NULL,
+    CONSTRAINT itemPK PRIMARY KEY (itemID)
 );
 
-#add inventory table
-create table inventory (
-inventoryID int not null auto_increment,
-quantity int null,
-gardenID INT NOT NULL,
-itemID int not null,
-constraint inventoryPK primary key (inventoryID),
-constraint inventoryFK1 foreign key (itemID) references item(itemID),
-constraint inventoryFK2 foreign key (gardenID) references Garden(gardenID)
-	ON UPDATE CASCADE ON DELETE RESTRICT
+
+DROP TABLE IF EXISTS inventory;
+CREATE TABLE inventory (
+    inventoryID int NOT NULL AUTO_INCREMENT,
+    quantity int NULL,
+    gardenID INT NOT NULL,
+    itemID int NOT NULL,
+    CONSTRAINT inventoryPK PRIMARY KEY (inventoryID),
+    CONSTRAINT inventoryFK1 FOREIGN KEY (itemID) REFERENCES item(itemID),
+    CONSTRAINT inventoryFK2 FOREIGN KEY (gardenID) REFERENCES Garden(gardenID)
+        ON UPDATE CASCADE ON DELETE RESTRICT
 );
 
-#add inventory trans
-create table inventoryTrans ( 
-transactionNo int not null auto_increment,
-quantityChange	int not null,
-datePurchased	date not null,
-price 	double	not null,
-itemID int not null,
-inventoryID int not null,
-constraint inventoryTransPK primary key (transactionNo),
-constraint inventoryTransFK foreign key	(itemID) references item(itemID)
-	ON UPDATE CASCADE ON DELETE RESTRICT,
-constraint inventoryTransFK2 foreign key (inventoryID) references inventory(inventoryID)
-	ON UPDATE CASCADE ON DELETE RESTRICT
+
+DROP TABLE IF EXISTS inventoryTrans;
+CREATE TABLE inventoryTrans (
+    transactionNo int NOT NULL AUTO_INCREMENT,
+    quantityChange int NOT NULL,
+    datePurchased date NOT NULL,
+    price double NOT NULL,
+    itemID int NOT NULL,
+    inventoryID int NOT NULL,
+    CONSTRAINT inventoryTransPK PRIMARY KEY (transactionNo),
+    CONSTRAINT inventoryTransFK FOREIGN KEY (itemID) REFERENCES item(itemID)
+        ON UPDATE CASCADE ON DELETE RESTRICT,
+    CONSTRAINT inventoryTransFK2 FOREIGN KEY (inventoryID) REFERENCES inventory(inventoryID)
+        ON UPDATE CASCADE ON DELETE RESTRICT
 );
 
-#User Defined functions: 
 
-#Function that returns # of club members with/without reservations  
-Delimiter %%
-
+DELIMITER %%
 CREATE FUNCTION membersWithCurrentReservation()
-RETURNS INT 
-DETERMINISTIC 
-BEGIN 
-  DECLARE reserved INT; 
-
-  SELECT COUNT(DISTINCT userID) 
-  INTO reserved
-  From RESERVATION;
-
-  RETURN reservation; 
-
-END %% 
-
-Delimiter ; 
-
-DELIMITER %%
-
-CREATE FUNCTION membersWithNoCurrentReservation()
-RETURNS INT 
-DETERMINISTIC 
-BEGIN 
-  DECLARE notReserved INT; 
-
-  SELECT COUNT(*) 
-  INTO notReserved 
-  FROM ClubMember
-  WHERE userID 
-        NOT IN(
-          SELECT userID FROM Reservation
-        ); 
-
-  RETURN notReserved; 
-
-END %% 
-
-#add a function named Semester that will concat semesterPlanted and yearPlanted to become one column 
-#for example: carrots | fall | 2025 -> carrots | fall 2025
-
-DELIMITER %%
-CREATE FUNCTION Semester(semester VARCHAR (8), year INT)
-RETURNS VARCHAR(15)
-DETERMINISTIC 
-BEGIN 
-  RETURN CONCAT (semester, ' ' , year); 
-END%%
-
-Delimiter ; 
-
-#Stored Procedures: 
-# Select statement that displays all the crops and their corresponding count of the crops that are planted in a particular garden
-
-DELIMITER %%
-
-CREATE PROCEDURE CurrentCropsInGardensReport()
+RETURNS INT
+DETERMINISTIC
 BEGIN
-  SELECT 
-  g.gardenID, 
-  g.gardenLocation,
-  b.bedNO,
-  ci.cropName, 
-  s.seasonName as seasonality,
-  Count(*) as cropCount
-  From Current_Crops AS cc
+    DECLARE reserved INT;
 
-  JOIN Bed AS b 
-    ON cc.bedNO = b.bedNO
-  JOIN Garden AS g 
-    ON b.gardenID = g.gardenID
-  JOIN Crop_Season as cs
-    ON cc.cropID = cs.CropID AND cc.seasonID = cs.seasonID
-  JOIN Crop_Info AS ci 
-    ON cs.CropID = ci.cropID
-  JOIN Season AS S
-    ON cs.SeasonID = S.SeasonID
-  GROUP BY g.gardenID, g.gardenLocation, b.bedNO, ci.cropName, s.seasonName
-  ORDER BY g.gardenID, b.bedNO, cropCount DESC;
+    SELECT COUNT(DISTINCT userID) INTO reserved
+    FROM Reservation;
 
+    RETURN reserved;
 END %%
-
-
 DELIMITER ;
 
-
- #Select statement that displays the beds which are not reserved (displays size, soilType, but NOT status)
 DELIMITER %%
+CREATE FUNCTION membersWithNoCurrentReservation()
+RETURNS INT
+DETERMINISTIC
+BEGIN
+    DECLARE notReserved INT;
 
+    SELECT COUNT(*) INTO notReserved
+    FROM club_member
+    WHERE userID NOT IN (SELECT userID FROM Reservation);
+
+    RETURN notReserved;
+END %%
+DELIMITER ;
+
+DELIMITER %%
+CREATE FUNCTION Semester(semester VARCHAR(8), year INT)
+RETURNS VARCHAR(15)
+DETERMINISTIC
+BEGIN
+    RETURN CONCAT(semester, ' ', year);
+END %%
+DELIMITER ;
+
+DELIMITER %%
+CREATE PROCEDURE CurrentCropsInGardensReport()
+BEGIN
+    SELECT 
+        g.gardenID,
+        g.gardenLocation,
+        b.bedNO,
+        ci.cropName,
+        s.seasonName AS seasonality,
+        COUNT(*) AS cropCount
+    FROM Current_Crops AS cc
+    JOIN Bed AS b ON cc.bedNO = b.bedNO
+    JOIN Garden AS g ON b.gardenID = g.gardenID
+    JOIN Crop_Season AS cs ON cc.cropSeasonID = cs.cropSeasonID
+    JOIN Crop_Info AS ci ON cs.cropID = ci.cropID
+    JOIN Season AS s ON cs.seasonID = s.seasonID
+    GROUP BY g.gardenID, g.gardenLocation, b.bedNO, ci.cropName, s.seasonName
+    ORDER BY g.gardenID, b.bedNO, cropCount DESC;
+END %%
+DELIMITER ;
+
+DELIMITER %%
 CREATE PROCEDURE UnreservedBeds()
 BEGIN
-  SELECT
-    b.bedNo, 
-    b.gardenID, 
-    g.gardenLocation, 
-    b.size, 
-    b.soilType,  
-    b.bedStatus
-  FROM Bed as b
-  JOIN Garden as g
-    ON b.gardenID = g.gardenID
-  LEFT JOIN Reservation AS r  
-    ON b.bedNO = r.bedNO
-  WHERE r.bedNO IS NULL;
-
+    SELECT
+        b.bedNo,
+        b.gardenID,
+        g.gardenLocation,
+        b.size,
+        b.soilType
+    FROM Bed AS b
+    JOIN Garden AS g ON b.gardenID = g.gardenID
+    LEFT JOIN Reservation AS r ON b.bedNO = r.bedNO
+    WHERE r.bedNO IS NULL;
 END %%
+DELIMITER ;
 
-DELIMITER ; 
-
-
-  
-
-
-#Select statement that displays low stock inventory items with (less than 3 in inventory)
-DELIMITER %% 
-
+DELIMITER %%
 CREATE PROCEDURE LowStockItems()
 BEGIN
-  SELECT
-    i.itemName,
-    inv.gardenID,
-    inv.quantity 
-  FROM inventory as inv
-  JOIN item as i 
-    ON inv.itemID = i.itemID
-  WHERE inv.quantity < 3 
-  ORDER BY inv.quantity ASC; 
+    SELECT
+        i.itemName,
+        inv.gardenID,
+        inv.quantity
+    FROM inventory AS inv
+    JOIN item AS i ON inv.itemID = i.itemID
+    WHERE inv.quantity < 3
+    ORDER BY inv.quantity ASC;
 END %%
+DELIMITER ;
 
-DELIMITER ; 
-  
-
-
-#Select statement that displays the last 1o inventory transactions
 DELIMITER %%
 CREATE PROCEDURE Last10InventoryTransactions()
-  BEGIN 
-  SELECT
-    t.transactionNo, 
-    t.quantityChange,     
-    t.datePurchased,
-    t.price,
-    i.itemName
-FROM 
-  inventoryTrans AS t
-  JOIN item as i on t.itemID = i.itemID
-  ORDER BY t.transactionNo DESC
-  LIMIT 10; 
+BEGIN
+    SELECT
+        t.transactionNo,
+        t.quantityChange,
+        t.datePurchased,
+        t.price,
+        i.itemName
+    FROM inventoryTrans AS t
+    JOIN item AS i ON t.itemID = i.itemID
+    ORDER BY t.transactionNo DESC
+    LIMIT 10;
+END %%
+DELIMITER ;
 
-END %% 
+-- Views
 
-DELIMITER ; 
+CREATE OR REPLACE VIEW GardenView AS
+SELECT
+    ci.cropName,
+    b.bedNO,
+    g.gardenLocation AS gardenName,
+    c.semesterPlanted,
+    c.yearPlanted,
+    g.gardenID
+FROM Current_Crops c
+JOIN Bed b ON c.bedNO = b.bedNO
+JOIN Garden g ON b.gardenID = g.gardenID
+JOIN Crop_Season cs ON c.cropSeasonID = cs.cropSeasonID
+JOIN Crop_Info ci ON cs.cropID = ci.cropID
+ORDER BY b.bedNO;
 
-DELIMITER %%
-
-CREATE VIEW CSTGardenView AS
-SELECT 
+CREATE OR REPLACE VIEW CurrentCropView AS
+SELECT
     ci.cropName,
     b.bedNO,
     g.gardenLocation AS gardenName,
@@ -326,43 +277,27 @@ JOIN Bed b ON c.bedNO = b.bedNO
 JOIN Garden g ON b.gardenID = g.gardenID
 JOIN Crop_Season cs ON c.cropSeasonID = cs.cropSeasonID
 JOIN Crop_Info ci ON cs.cropID = ci.cropID
-WHERE g.gardenID = 1
 ORDER BY b.bedNO;
 
-CREATE VIEW SUSGardenView AS
-SELECT 
-    ci.cropName,
-    b.bedNO,
+CREATE OR REPLACE VIEW OfficerViewInventory AS
+SELECT
+    i.itemName,
+    iv.quantity,
+    g.gardenLocation AS gardenName
+FROM inventory iv
+JOIN item i ON iv.itemID = i.itemID
+JOIN Garden g ON iv.gardenID = g.gardenID
+ORDER BY g.gardenLocation;
+
+CREATE OR REPLACE VIEW AdvisorInventoryTransView AS
+SELECT
+    i.itemName,
+    iv.quantity,
     g.gardenLocation AS gardenName,
-    c.semesterPlanted,
-    c.yearPlanted
-FROM Current_Crops c
-JOIN Bed b ON c.bedNO = b.bedNO
-JOIN Garden g ON b.gardenID = g.gardenID
-JOIN Crop_Season cs ON c.cropSeasonID = cs.cropSeasonID
-JOIN Crop_Info ci ON cs.cropID = ci.cropID
-WHERE g.gardenID = 2
-ORDER BY b.bedNO;
-
-
-create view CurrentCropView
-as select c.cropName, b.bedNO, g.gardenLocation AS gardenName, c.semesterPlanted, c.yearPlanted
-from Current_Crops c
-join Bed b ON c.bedNO = b.bedNO
-join Garden g ON b.gardenID = g.gardenID
-order by b.bedNO;
-
-create view OfficerViewInventory
-as select i.itemName, iv.quantity, g.gardenLocation AS gardenName
-from inventory iv
-join item i ON iv.inventoryID = iv.inventoryID 
-join Garden g ON iv.gardenID = g.gardenID
-order by g.gardenLocation;
-
-create view AdvisorInventoryTransView
-as select i.itemName, iv.quantity, g.gardenLocation AS gardenName, ivt.datePurchased, ivt.price
-from inventoryTrans ivt
-join item i ON ivt.itemID = i.itemID
-join inventory iv ON ivt.inventoryID = iv.inventoryID
-join Garden g ON iv.gardenID = g.gardenID
-order by ivt.datePurchased DESC, i.itemName;
+    ivt.datePurchased,
+    ivt.price
+FROM inventoryTrans ivt
+JOIN item i ON ivt.itemID = i.itemID
+JOIN inventory iv ON ivt.inventoryID = iv.inventoryID
+JOIN Garden g ON iv.gardenID = g.gardenID
+ORDER BY ivt.datePurchased DESC, i.itemName;

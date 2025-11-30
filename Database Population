@@ -1,3 +1,6 @@
+#Team_8 Project #Database Populate file
+#By Elisa Mujica, Juan Ruiz, and Roland Klahitar
+
 -- club_member population 
 INSERT INTO club_member (userType, lastName, firstName) 
 VALUES 

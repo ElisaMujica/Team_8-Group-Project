@@ -1,0 +1,99 @@
+#####################################################
+# crops currently growing in CST garden 
+#####################################################
+
+SELECT 
+    g.gardenLocation,
+    b.bedNO,
+    ci.cropName,
+    cc.plantStatus,
+    cc.semesterPlanted,
+    cc.yearPlanted
+FROM Current_Crops cc
+JOIN Bed b ON cc.bedNO = b.bedNO
+JOIN Garden g ON b.gardenID = g.gardenID
+JOIN Crop_Season cs ON cc.cropSeasonID = cs.cropSeasonID
+JOIN Crop_Info ci ON cs.cropID = ci.cropID
+WHERE g.gardenLocation = 'CST Garden';
+
+#####################################################
+#crops currently growing in CST garden 
+#####################################################
+
+SELECT 
+    g.gardenLocation,
+    b.bedNO,
+    ci.cropName,
+    cc.plantStatus,
+    cc.semesterPlanted,
+    cc.yearPlanted
+FROM Current_Crops cc
+JOIN Bed b ON cc.bedNO = b.bedNO
+JOIN Garden g ON b.gardenID = g.gardenID
+JOIN Crop_Season cs ON cc.cropSeasonID = cs.cropSeasonID
+JOIN Crop_Info ci ON cs.cropID = ci.cropID
+WHERE g.gardenLocation = 'Sustainability Garden';
+
+#####################################################
+# Show inventory by garden, sorted from highest to lowest quantity
+#####################################################
+SELECT 
+    g.gardenLocation,
+    i.itemName,
+    inv.quantity
+FROM inventory inv
+JOIN item i ON inv.itemID = i.itemID
+JOIN Garden g ON inv.gardenID = g.gardenID
+ORDER BY inv.quantity DESC;
+
+#####################################################
+#Show all transactions for one specific item
+#####################################################
+ SELECT 
+    i.itemName,
+    t.transactionNo,
+    t.quantityChange,
+    t.datePurchased,
+    t.price
+FROM inventoryTrans t
+JOIN item i ON t.itemID = i.itemID
+WHERE i.itemName = 'Chicken Wire'
+ORDER BY t.datePurchased DESC;
+
+#####################################################
+#Last 3 transactions 
+#####################################################
+SELECT
+    t.transactionNo, 
+    t.quantityChange,     
+    t.datePurchased,
+    t.price,
+    i.itemName
+FROM 
+  inventoryTrans AS t
+  JOIN item as i on t.itemID = i.itemID
+  ORDER BY t.transactionNo DESC
+  LIMIT 3; 
+
+
+#####################################################
+#Unreserved beds 
+#####################################################
+  SELECT
+    b.bedNo, 
+    b.gardenID, 
+    g.gardenLocation, 
+    b.size, 
+    b.soilType,  
+    b.bedStatus
+  FROM Bed as b
+  JOIN Garden as g
+    ON b.gardenID = g.gardenID
+  LEFT JOIN Reservation AS r  
+    ON b.bedNO = r.bedNO
+  WHERE r.bedNO IS NULL;
+
+
+
+
+

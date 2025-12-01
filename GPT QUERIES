@@ -1,0 +1,60 @@
+######## crops currently growing in a specific garden 
+SELECT 
+    g.gardenLocation,
+    b.bedNO,
+    ci.cropName,
+    cc.plantStatus,
+    cc.semesterPlanted,
+    cc.yearPlanted
+FROM Current_Crops cc
+JOIN Bed b ON cc.bedNO = b.bedNO
+JOIN Garden g ON b.gardenID = g.gardenID
+JOIN Crop_Season cs ON cc.cropSeasonID = cs.cropSeasonID
+JOIN Crop_Info ci ON cs.cropID = ci.cropID
+WHERE g.gardenLocation = 'CST Garden';
+
+
+#######
+SELECT 
+    cm.firstName,
+    cm.lastName,
+    cm.userType,
+    r.bedNO,
+    r.semesterAssigned
+FROM club_member cm
+LEFT JOIN Reservation r ON cm.userID = r.userID
+ORDER BY cm.lastName;
+
+##Show crop families and how many beds each family occupies
+SELECT 
+    ci.cropFamily,
+    COUNT(*) AS numberOfBeds
+FROM Current_Crops cc
+JOIN Crop_Season cs ON cc.cropSeasonID = cs.cropSeasonID
+JOIN Crop_Info ci ON cs.cropID = ci.cropID
+GROUP BY ci.cropFamily
+ORDER BY numberOfBeds DESC;
+
+
+##4. Show inventory by garden, sorted from highest to lowest quantity
+SELECT 
+    g.gardenLocation,
+    i.itemName,
+    inv.quantity
+FROM inventory inv
+JOIN item i ON inv.itemID = i.itemID
+JOIN Garden g ON inv.gardenID = g.gardenID
+ORDER BY inv.quantity DESC;
+
+##5. Show all transactions for one specific item
+ SELECT 
+    i.itemName,
+    t.transactionNo,
+    t.quantityChange,
+    t.datePurchased,
+    t.price
+FROM inventoryTrans t
+JOIN item i ON t.itemID = i.itemID
+WHERE i.itemName = 'Chicken Wire'
+ORDER BY t.datePurchased DESC;
+

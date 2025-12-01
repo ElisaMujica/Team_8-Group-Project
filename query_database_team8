@@ -17,7 +17,7 @@ JOIN Crop_Info ci ON cs.cropID = ci.cropID
 WHERE g.gardenLocation = 'CST Garden';
 
 #####################################################
-#crops currently growing in CST garden 
+#crops currently growing in Sustainability garden 
 #####################################################
 
 SELECT 
@@ -47,7 +47,7 @@ JOIN Garden g ON inv.gardenID = g.gardenID
 ORDER BY inv.quantity DESC;
 
 #####################################################
-#Show all transactions for one specific item
+#Show all transactions for one specific item, chicken wire here 
 #####################################################
  SELECT 
     i.itemName,
@@ -91,4 +91,40 @@ JOIN Garden AS g
 LEFT JOIN Reservation AS r  
     ON b.bedNO = r.bedNO
 WHERE r.bedNO IS NULL;
+
+#####################################################
+#Current crops procedure 
+#####################################################
+CALL CurrentCropsInGardensReport();
+
+#####################################################
+#low stock items procedure 
+#####################################################
+CALL LowStockItems(); 
+
+
+
+#####################################################
+#Garden View 
+#####################################################
+SELECT * FROM GardenView;
+
+#####################################################
+#Advisor view  
+#####################################################
+
+SELECT * FROM advisorinventorytransview; 
+
+#####################################################
+#currentcrop view  
+#####################################################
+
+SELECT * FROM currentcropview; 
+
+#####################################################
+#officer inventory view 
+#####################################################
+
+SELECT * FROM officerviewinventory; 
+
 

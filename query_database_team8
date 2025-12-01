@@ -79,21 +79,16 @@ FROM
 #####################################################
 #Unreserved beds 
 #####################################################
-  SELECT
+SELECT
     b.bedNo, 
     b.gardenID, 
     g.gardenLocation, 
     b.size, 
-    b.soilType,  
-    b.bedStatus
-  FROM Bed as b
-  JOIN Garden as g
+    b.soilType
+FROM Bed AS b
+JOIN Garden AS g
     ON b.gardenID = g.gardenID
-  LEFT JOIN Reservation AS r  
+LEFT JOIN Reservation AS r  
     ON b.bedNO = r.bedNO
-  WHERE r.bedNO IS NULL;
-
-
-
-
+WHERE r.bedNO IS NULL;
 

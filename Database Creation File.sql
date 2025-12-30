@@ -85,20 +85,6 @@ CREATE TABLE Bed (
 );
 
 
-CREATE TABLE Growing_Bed(
-  cropName char(35) NOT NULL,
-  bedNO char(5) NOT NULL,
-  datePlanted DATE NOT NULL,
-  dateHarvested DATE NULL,
-  issuesEncountered TEXT NULL,
-  CONSTRAINT Growing_BedPK PRIMARY KEY (cropName, bedNO, datePlanted),
-  CONSTRAINT Current_CropsFK FOREIGN KEY (cropName) REFERENCES Current_Crops(cropName)
-        ON UPDATE CASCADE ON DELETE RESTRICT,
-  CONSTRAINT BedFK FOREIGN KEY (bedNO) REFERENCES Bed(bedNO)
-        ON UPDATE CASCADE ON DELETE RESTRICT,
-    CONSTRAINT ValidHarvestDate CHECK (dateHarvested IS NULL OR dateHarvested >= datePlanted)
-);
-
 #Add club member table 
 Create table club_member(
 userID	int not null auto_increment,
